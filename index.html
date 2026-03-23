@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marrakech · Ladies' Trip 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green: #1D9E75;
+  --green-dark: #085041;
+  --green-light: #E1F5EE;
+  --green-mid: #2D7A5E;
+  --amber: #BA7517;
+  --amber-light: #FAEEDA;
+  --amber-dark: #633806;
+  --coral: #D85A30;
+  --purple: #7F77DD;
+  --purple-light: #EEEDFE;
+  --blue-light: #E6F1FB;
+  --blue-dark: #0C447C;
+  --transport: #F0EDE4;
+  --transport-text: #5F5E5A;
+  --border: #E5E2DA;
+  --text: #1a1a18;
+  --text-muted: #7a7870;
+  --text-light: #a8a49c;
+  --bg: #FAFAF7;
+  --card: #FFFFFF;
+  --shadow: 0 2px 20px rgba(0,0,0,0.06);
+  --shadow-hover: 0 8px 40px rgba(0,0,0,0.12);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  font-weight: 300;
+}
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(160deg, #0a3d2e 0%, #1D9E75 50%, #2ec48f 100%);
+  padding: 60px 24px 80px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.6);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  position: relative;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 8vw, 64px);
+  font-weight: 400;
+  color: white;
+  line-height: 1.1;
+  margin-bottom: 12px;
+  position: relative;
+}
+.hero h1 em {
+  font-style: italic;
+  color: #9FE1CB;
+}
+.hero-sub {
+  font-size: 15px;
+  color: rgba(255,255,255,0.75);
+  font-weight: 300;
+  position: relative;
+  margin-bottom: 32px;
+}
+.hero-pills {
+  display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+  position: relative;
+}
+.hero-pill {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: white;
+  font-size: 12px;
+  padding: 5px 14px;
+  border-radius: 99px;
+  font-weight: 400;
+  backdrop-filter: blur(8px);
+}
+
+/* ── NAV ── */
+.day-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(250,250,247,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 16px;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.day-nav::-webkit-scrollbar { display: none; }
+.nav-btn {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-muted);
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.nav-btn .nav-date { font-size: 10px; font-family: 'DM Mono', monospace; }
+.nav-btn.active { color: var(--green); border-bottom-color: var(--green); font-weight: 500; }
+.nav-btn:hover:not(.active) { color: var(--text); }
+.nav-overview { color: var(--text-muted); font-weight: 500; }
+.nav-overview.active { color: var(--green); }
+
+/* ── MAIN ── */
+.main { max-width: 780px; margin: 0 auto; padding: 32px 16px 80px; }
+
+/* ── OVERVIEW ── */
+.overview { display: none; }
+.overview.visible { display: block; }
+
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+@media(max-width: 500px) { .overview-grid { grid-template-columns: repeat(2,1fr); } }
+
+.ov-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: block;
+}
+.ov-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+.ov-day-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--green);
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+.ov-date {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+.ov-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.4;
+  margin-bottom: 10px;
+}
+.ov-highlights { display: flex; flex-direction: column; gap: 3px; }
+.ov-highlight { font-size: 11px; color: var(--text-muted); display: flex; align-items: center; gap: 5px; }
+.ov-highlight::before { content: '·'; color: var(--green); font-size: 14px; line-height: 1; }
+
+.summary-box {
+  background: var(--green);
+  border-radius: 16px;
+  padding: 24px;
+  color: white;
+  margin-bottom: 24px;
+}
+.summary-box h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 400;
+  margin-bottom: 16px;
+  color: white;
+}
+.summary-totals {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.summary-total { text-align: center; }
+.summary-total-label { font-size: 10px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; font-family: 'DM Mono', monospace; }
+.summary-total-val { font-size: 22px; font-weight: 500; color: white; }
+.summary-total-sub { font-size: 11px; color: rgba(255,255,255,0.6); }
+
+.key-info {
+  background: var(--green-light);
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 13px;
+  color: var(--green-dark);
+  margin-bottom: 16px;
+  line-height: 1.7;
+}
+
+/* ── DAY VIEW ── */
+.day-view { display: none; }
+.day-view.visible { display: block; }
+
+.day-header-block {
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.day-header-top {
+  padding: 20px 20px 16px;
+  color: white;
+}
+.day-header-top.green { background: var(--green); }
+.day-header-top.mid-green { background: var(--green-mid); }
+.day-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.65);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.day-title-large {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: white;
+  line-height: 1.3;
+}
+.day-header-bottom {
+  background: var(--green-light);
+  padding: 10px 20px;
+  font-size: 12px;
+  color: var(--green-dark);
+}
+
+/* ── TIMELINE ── */
+.timeline { display: flex; flex-direction: column; }
+
+.tl-transport {
+  background: var(--transport);
+  padding: 8px 16px;
+  font-size: 12px;
+  color: var(--transport-text);
+  border-radius: 8px;
+  margin: 4px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tl-event {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  gap: 0 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.tl-event:last-of-type { border-bottom: none; }
+
+.tl-time {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--text-light);
+  padding-top: 2px;
+  font-weight: 500;
+}
+
+.tl-body {}
+.tl-name {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 3px;
+  line-height: 1.4;
+}
+.tl-note {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 6px;
+}
+.tl-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 5px; }
+.tl-tag {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 99px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+.tag-sight { background: var(--green-light); color: var(--green-dark); }
+.tag-eat { background: #FAECE7; color: #712B13; }
+.tag-spa { background: var(--purple-light); color: var(--purple); }
+.tag-trip { background: var(--amber-light); color: var(--amber-dark); }
+.tag-cook { background: var(--blue-light); color: var(--blue-dark); }
+.tag-pool { background: #E6F1FB; color: #0C447C; }
+.tag-slow { background: #FCE8F0; color: #7A1535; }
+.tag-incl { background: #F0F0F0; color: #555; }
+
+.tl-cost {
+  margin-top: 6px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.tl-cost-mad { font-size: 14px; font-weight: 500; color: var(--text); }
+.tl-cost-eur { font-size: 11px; color: var(--text-muted); }
+
+.tl-note-box {
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 12px;
+  line-height: 1.6;
+  margin: 4px 0;
+}
+.tl-note-box.fitness { background: var(--blue-light); color: var(--blue-dark); }
+.tl-note-box.warn { background: #FFF5E6; color: var(--amber-dark); }
+.tl-note-box.incl { background: var(--green-light); color: var(--green-dark); }
+
+.tl-riad {
+  background: var(--green-light);
+  border-top: 1px solid #9FE1CB;
+  padding: 10px 16px;
+  border-radius: 0 0 12px 12px;
+  font-size: 12px;
+  color: var(--green-dark);
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+.tl-total {
+  background: var(--amber-light);
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin: 12px 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.tl-total-label { font-size: 12px; font-weight: 500; color: var(--amber-dark); }
+.tl-total-right { text-align: right; }
+.tl-total-mad { font-size: 15px; font-weight: 600; color: var(--amber-dark); }
+.tl-total-eur { font-size: 11px; color: #854F0B; margin-top: 1px; }
+
+.tl-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+.tl-card-inner { padding: 0 16px; }
+
+/* ── BOOKING / INFO TABS ── */
+.section-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.stab {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  padding: 7px 16px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text-muted);
+}
+.stab.active { background: var(--green); color: white; border-color: var(--green); }
+
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* ── BOOKING LIST ── */
+.booking-list { display: flex; flex-direction: column; gap: 8px; }
+.booking-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.booking-check {
+  width: 22px; height: 22px;
+  border-radius: 6px;
+  background: var(--green-light);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.booking-check.done { background: var(--green); }
+.booking-check svg { display: none; }
+.booking-check.done svg { display: block; }
+.booking-body { flex: 1; }
+.booking-name { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 3px; }
+.booking-detail { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+.booking-day { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--green); margin-bottom: 3px; }
+
+/* ── CASH / INFO LIST ── */
+.info-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 10px;
+}
+.info-card h4 {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.info-card p, .info-card li {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+.info-card ul { padding-left: 16px; }
+.info-highlight {
+  background: var(--amber-light);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  font-size: 13px;
+  color: var(--amber-dark);
+  line-height: 1.6;
+}
+.info-green {
+  background: var(--green-light);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  font-size: 13px;
+  color: var(--green-dark);
+  line-height: 1.6;
+}
+
+/* ── FOOD GUIDE ── */
+.food-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 8px;
+}
+.food-day { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--green); margin-bottom: 4px; }
+.food-name { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 400; color: var(--text); margin-bottom: 6px; }
+.food-meal { font-size: 11px; color: var(--text-light); margin-bottom: 8px; }
+.food-desc { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+
+/* ── RESPONSIVE ── */
+@media(max-width:600px) {
+  .summary-totals { grid-template-columns: repeat(3,1fr); gap: 8px; }
+  .summary-total-val { font-size: 18px; }
+  .hero { padding: 40px 16px 60px; }
+}
+
+.fade-in { animation: fadeIn 0.4s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-eyebrow">27 May – 1 June 2026</div>
+  <h1>Marrakech<br><em>Ladies' Trip</em></h1>
+  <div class="hero-sub">6 ladies · 6 days · 5 nights · Kasbah riad</div>
+  <div class="hero-pills">
+    <span class="hero-pill">2 spa days</span>
+    <span class="hero-pill">Private Atlas tour</span>
+    <span class="hero-pill">Farm cooking class</span>
+    <span class="hero-pill">Bacha Coffee</span>
+    <span class="hero-pill">Folk Marrakech</span>
+    <span class="hero-pill">Slow souk day</span>
+  </div>
+</div>
+
+<nav class="day-nav">
+  <button class="nav-btn nav-overview active" onclick="showView('overview')">
+    Overview
+    <span class="nav-date">All days</span>
+  </button>
+  <button class="nav-btn" onclick="showView('day1')">Day 1<span class="nav-date">27 May</span></button>
+  <button class="nav-btn" onclick="showView('day2')">Day 2<span class="nav-date">28 May</span></button>
+  <button class="nav-btn" onclick="showView('day3')">Day 3<span class="nav-date">29 May</span></button>
+  <button class="nav-btn" onclick="showView('day4')">Day 4<span class="nav-date">30 May</span></button>
+  <button class="nav-btn" onclick="showView('day5')">Day 5<span class="nav-date">31 May</span></button>
+  <button class="nav-btn" onclick="showView('day6')">Day 6<span class="nav-date">1 June</span></button>
+  <button class="nav-btn" onclick="showView('bookings')">Bookings<span class="nav-date">To-do</span></button>
+  <button class="nav-btn" onclick="showView('food')">Food Guide<span class="nav-date">All restaurants</span></button>
+</nav>
+
+<div class="main">
+
+<!-- ═══ OVERVIEW ═══ -->
+<div id="view-overview" class="overview visible fade-in">
+
+  <div class="summary-box">
+    <h3>Estimated spend per person</h3>
+    <div class="summary-totals">
+      <div class="summary-total">
+        <div class="summary-total-label">Low</div>
+        <div class="summary-total-val">€472</div>
+        <div class="summary-total-sub">≈ 4,960 MAD</div>
+      </div>
+      <div class="summary-total">
+        <div class="summary-total-label">Mid</div>
+        <div class="summary-total-val">€567</div>
+        <div class="summary-total-sub">≈ 5,950 MAD</div>
+      </div>
+      <div class="summary-total">
+        <div class="summary-total-label">High</div>
+        <div class="summary-total-val">€714+</div>
+        <div class="summary-total-sub">+ cocktails & shopping</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="key-info">
+    🚕 Airport taxi: €28.55 return ÷ 6 = <strong>€2.38 pp each way</strong> (≈ 25 MAD)<br>
+    💱 1 EUR ≈ 10.5 MAD<br>
+    🏔 Atlas Mountains private tour: €474 total = <strong>€79 pp</strong>
+  </div>
+
+  <div class="overview-grid">
+    <div class="ov-card" onclick="showView('day1')">
+      <div class="ov-day-label">Day 1</div>
+      <div class="ov-date">Wed 27 May · Arrival</div>
+      <div class="ov-title">Saadian Tombs · Hammam · La Pergola</div>
+      <div class="ov-highlights">
+        <div class="ov-highlight">Coco Rooftop brunch</div>
+        <div class="ov-highlight">Le Bain de Kasbah spa</div>
+        <div class="ov-highlight">Live jazz dinner</div>
+      </div>
+    </div>
+    <div class="ov-card" onclick="showView('day2')">
+      <div class="ov-day-label">Day 2</div>
+      <div class="ov-date">Thu 28 May</div>
+      <div class="ov-title">Majorelle · Medersa · Souks</div>
+      <div class="ov-highlights">
+        <div class="ov-highlight">Jardin Majorelle</div>
+        <div class="ov-highlight">Dar Cherifa lunch</div>
+        <div class="ov-highlight">Le Slimana rooftop</div>
+      </div>
+    </div>
+    <div class="ov-card" onclick="showView('day3')">
+      <div class="ov-day-label">Day 3</div>
+      <div class="ov-date">Fri 29 May</div>
+      <div class="ov-title">El Badii · Lalla Zehra Farm</div>
+      <div class="ov-highlights">
+        <div class="ov-highlight">Palais El Badii</div>
+        <div class="ov-highlight">Cooking class + pool</div>
+        <div class="ov-highlight">La Terrasse du Jardin</div>
+      </div>
+    </div>
+    <div class="ov-card" onclick="showView('day4')">
+      <div class="ov-day-label">Day 4</div>
+      <div class="ov-date">Sat 30 May</div>
+      <div class="ov-title">🏔 Atlas Mountains · Folk Marrakech</div>
+      <div class="ov-highlights">
+        <div class="ov-highlight">Private tour · €79 pp</div>
+        <div class="ov-highlight">Berber lunch included</div>
+        <div class="ov-highlight">Gnawa show Saturday!</div>
+      </div>
+    </div>
+    <div class="ov-card" onclick="showView('day5')">
+      <div class="ov-day-label">Day 5</div>
+      <div class="ov-date">Sun 31 May · Slow day 🌸</div>
+      <div class="ov-title">Bacha Coffee · Bahia Palace · Le Jardin</div>
+      <div class="ov-highlights">
+        <div class="ov-highlight">Dar El Bacha (queue at 9am!)</div>
+        <div class="ov-highlight">Mouassine souk wander</div>
+        <div class="ov-highlight">Le Jardin garden dinner</div>
+      </div>
+    </div>
+    <div class="ov-card" onclick="showView('day6')">
+      <div class="ov-day-label">Day 6</div>
+      <div class="ov-date">Mon 1 June · Departure</div>
+      <div class="ov-title">Mythic Spa · Farewell Lunch · ✈ 19:15</div>
+      <div class="ov-highlights">
+        <div class="ov-highlight">Mythic Oriental Spa</div>
+        <div class="ov-highlight">Café Dar L'Hssira</div>
+        <div class="ov-highlight">Leave riad by 17:00!</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ DAY 1 ═══ -->
+<div id="view-day1" class="day-view fade-in">
+  <div class="day-header-block">
+    <div class="day-header-top green">
+      <div class="day-label">Day 1 · Wednesday 27 May · Arrival</div>
+      <div class="day-title-large">Saadian Tombs · Coco Rooftop · Le Bain de Kasbah · La Pergola</div>
+    </div>
+    <div class="day-header-bottom">🚕 Airport taxi ≈ €2.38 pp · 1 EUR ≈ 10.5 MAD</div>
+  </div>
+  <div class="tl-card">
+    <div class="tl-card-inner">
+      <div class="timeline">
+        <div class="tl-event">
+          <div class="tl-time">08:15</div>
+          <div class="tl-body">
+            <div class="tl-name">✈ Arrive Marrakech Menara Airport</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tl-transport">🚕 Airport → riad · pre-agreed fare · ~20 min · 25 MAD / €2.38 pp</div>
+    <div class="tl-card-inner">
+      <div class="timeline">
+        <div class="tl-event">
+          <div class="tl-time">09:30</div>
+          <div class="tl-body">
+            <div class="tl-name">Saadian Tombs</div>
+            <div class="tl-note">5-min walk from riad · buy tickets online · 16th-c royal necropolis</div>
+            <div class="tl-tags"><span class="tl-tag tag-sight">Sightseeing</span><span class="tl-tag" style="background:#f5f5f5;color:#555">Cash · 100 MAD</span></div>
+            <div class="tl-cost"><span class="tl-cost-mad">100 MAD</span><span class="tl-cost-eur">≈ €9.50</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tl-transport">🚶 Walk ~10 min to Coco Rooftop · free</div>
+    <div class="tl-card-inner">
+      <div class="timeline">
+        <div class="tl-event">
+          <div class="tl-time">11:30</div>
+          <div class="tl-body">
+            <div class="tl-name">Brunch · Coco Rooftop</div>
+            <div class="tl-note">⭐ 4.6 · opens 11:30 · Moroccan spreads & Koutoubia views · +212 6 88 46 35 91 · book ahead for 6</div>
+            <div class="tl-tags"><span class="tl-tag tag-eat">Brunch</span></div>
+            <div class="tl-cost"><span class="tl-cost-mad">200–280 MAD</span><span class="tl-cost-eur">≈ €19–27</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tl-transport">🚶 Walk ~5 min to Le Bain de Kasbah · free</div>
+    <div class="tl-card-inner">
+      <div class="timeline">
+        <div class="tl-event">
+          <div class="tl-time">14:00</div>
+          <div class="tl-body">
+            <div class="tl-name">Spa #1 · Le Bain de Kasbah — Hammam & Massage</div>
+            <div class="tl-note">⭐ 4.8 · Derb El Hammam, near Saadian Tombs · Mon–Sat 9–7pm · +212 6 68 13 05 77 · book ahead for 6</div>
+            <div class="tl-tags"><span class="tl-tag tag-spa">Spa</span></div>
+            <div class="tl-cost"><span class="tl-cost-mad">550–750 MAD</span><span class="tl-cost-eur">≈ €52–71</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tl-transport">🚕 Taxi riad → La Pergola · ~5 MAD pp · ~10 min</div>
+    <div class="tl-card-inner">
+      <div class="timeline">
+        <div class="tl-event">
+          <div class="tl-time">19:30</div>
+          <div class="tl-body">
+            <div class="tl-name">Dinner · La Pergola & Le Bistro Arabe</div>
+            <div class="tl-note">⭐ 4.8 · live jazz from 7:30pm · cocktails · riad-monceau.com · +212 5 24 42 96 46 · book ahead!</div>
+            <div class="tl-tags"><span class="tl-tag tag-eat">Dinner</span><span class="tl-tag" style="background:#FCE8F0;color:#7A1535">Live jazz 🎷</span></div>
+            <div class="tl-cost"><span class="tl-cost-mad">400–500 MAD</span><span class="tl-cost-eur">≈ €38–48</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tl-riad">🏠 Return to riad · taxi ~5 MAD pp · ~10 min</div>
+  </div>
+  <div class="tl-total">
+    <div class="tl-total-label">Day 1 total pp<br><span style="font-weight:300;font-size:11px">taxi in + entry + brunch + spa + dinner</span></div>
+    <div class="tl-total-right">
+      <div class="tl-total-mad">1,285–1,660 MAD</div>
+      <div class="tl-total-eur">≈ €122–158</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ DAY 2 ═══ -->
+<div id="view-day2" class="day-view fade-in">
+  <div class="day-header-block">
+    <div class="day-header-top mid-green">
+      <div class="day-label">Day 2 · Thursday 28 May</div>
+      <div class="day-title-large">Jardin Majorelle · Medersa · Dar Cherifa · Souks · Le Slimana</div>
+    </div>
+    <div class="day-header-bottom">Optional: YSL Museum +130 MAD (open Thu ✓)</div>
+  </div>
+  <div class="tl-card">
+    <div class="tl-transport">🚕 Riad → Jardin Majorelle · taxi ~8 MAD pp · ~15 min</div>
+    <div class="tl-card-inner">
+      <div class="timeline">
+        <div class="tl-event">
+          <div class="tl-time">08:30</div>
+          <div class="tl-body">
+            <div class="tl-name">Jardin Majorelle — Garden + Berber Museum</div>
+            <div class="tl-note">Book timed entry at tickets.jardinmajorelle.com (official site only) · Berber Museum included</div>
+            <div class="tl-tags"><span class="tl-tag tag-sight">Sightseeing</span><span class="tl-tag" style="background:#EEEDFE;color:#3C3489">Optional: YSL Museum +130 MAD</span></div>
+            <div class="tl-cost"><span class="tl-cost-mad">70 MAD</span><span class="tl-cost-eur">≈ €6.70</span></div>
+          </div>
+        </div>
+        <div class="tl-event">
+          <div class="tl-time">10:30</div>
+          <div class="tl-body">
+            <div class="tl-name">Coffee & stroll in Guéliz</div>
+            <div class="tl-note">Cafés & boutiques in the French Quarter · gentle pace</div>
+            <div class="tl-cost"><span class="tl-cost-mad">30–50 MAD</span><span class="tl-cost-eur">≈ €3–5</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tl-transport">🚕 Guéliz → Medersa Ben Youssef · taxi ~8 MAD pp · ~15 min</div>
+    <div class="tl-card-inner">
+      <div class="timeline">
+        <div class="tl-event">
+          <div class="tl-time">11:30</div>
+          <div class="tl-body">
+            <div class="tl-name">Medersa Ben Youssef</div>
+            <div class="tl-note">50 MAD cash · 14th-c Islamic college · intricate tilework & carved cedar ceilings</div>
+            <div class="tl-tags"><span class="tl-tag tag-sight">Sightseeing</span><span class="tl-tag" style="background:#f5f5f5;color:#555">Cash · 50 MAD</span></div>
+            <div class="tl-cost"><span class="tl-cost-mad">50 MAD</span><span class="tl-cost-eur">≈ €4.75</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tl-transport">🚶 Walk ~8 min through northern souks to Dar Cherifa · free</div>
+    <div class="tl-card-inner">
+      <div class="timeline">
+        <div class="tl-event">
+          <div class="tl-time">13:00</div>
+          <div class="tl-body">
+            <div class="tl-name">Lunch · Dar Cherifa</div>
+            <div class="tl-note">Oldest riad in Marrakech · candlelit courtyard · darcherifa.com · 8 Derb Chorfa Lakbir · cash only · closes 7pm</div>
+            <div class="tl-tags"><span class="tl-tag tag-eat">Lunch</span><span class="tl-tag" style="background:#f5f5f5;color:#555">Cash only</span></div>
+            <div class="tl-cost"><span class="tl-cost-mad">200–350 MAD</span><span class="tl-cost-eur">≈ €19–33</span></div>
+          </div>
+        </div>
+        <div class="tl-event">
+          <div class="tl-time">14:30</div>
+          <div class="tl-body">
+            <div class="tl-name">Souk Semmarine & spice souks</div>
+            <div class="tl-note">Leather, ceramics, lanterns, argan oil · haggle! · Different Concept Store — 14 Rue Amsafah</div>
+            <div class="tl-tags"><span class="tl-tag tag-sight">Explore</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tl-transport">🚶 Walk ~12 min through the medina to Le Slimana · free</div>
+    <div class="tl-card-inner">
+      <div class="timeline">
+        <div class="tl-event">
+          <div class="tl-time">19:30</div>
+          <div class="tl-body">
+            <div class="tl-name">Dinner · Le Slimana Rooftop</div>
+            <div class="tl-note">⭐ 4.8 · caramelised octopus · lamb ravioli · pistachio crème brûlée · wine available · leslimana.com · +212 5 24 42 91 69</div>
+            <div class="tl-tags"><span class="tl-tag tag-eat">Dinner</span><span class="tl-tag" style="background:#E1F5EE;color:#085041">Wine available</span></div>
+            <div class="tl-cost"><span class="tl-cost-mad">250–400 MAD</span><span class="tl-cost-eur">≈ €24–38</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tl-riad">🏠 Return to riad · walk ~18 min or taxi ~5 MAD pp</div>
+  </div>
+  <div class="tl-total">
+    <div class="tl-total-label">Day 2 total pp<br><span style="font-weight:300;font-size:11px">taxis + Majorelle + Medersa + coffee + lunch + dinner</span></div>
+    <div class="tl-total-right"><div class="tl-total-mad">616–926 MAD</div><div class="tl-total-eur">≈ €59–88</div></div>
+  </div>
+</div>
+
+<!-- ═══ DAY 3 ═══ -->
+<div id="view-day3" class="day-view fade-in">
+  <div class="day-header-block">
+    <div class="day-header-top green">
+      <div class="day-label">Day 3 · Friday 29 May</div>
+      <div class="day-title-large">Palais El Badii · La Terrasse du Jardin · Lalla Zehra Farm & Pool 🏊</div>
+    </div>
+    <div class="day-header-bottom">🩱 Pack swimsuits for Lalla Zehra! Transport included in 600 MAD.</div>
+  </div>
+  <div class="tl-card">
+    <div class="tl-card-inner">
+      <div class="timeline">
+        <div class="tl-event">
+          <div class="tl-time">09:30</div>
+          <div class="tl-body">
+            <div class="tl-name">Palais El Badii</div>
+            <div class="tl-note">~10 min walk from riad · buy tickets online · rooftop stork nests & sweeping medina views</div>
+            <div class="tl-tags"><span class="tl-tag tag-sight">Sightseeing</span><span class="tl-tag" style="background:#f5f5f5;color:#555">Cash · 100 MAD</span></div>
+            <div class="tl-cost"><span class="tl-cost-mad">100 MAD</span><span class="tl-cost-eur">≈ €9.50</span></div>
+          </div>
+        </div>
+        <div class="tl-event">
+          <div class="tl-time">11:00</div>
+          <div class="tl-body">
+            <div class="tl-name">Kasbah streets & Different Concept Store</div>
+            <div class="tl-note">14 Rue Amsafah · curated Moroccan accessories, bags, jewellery · rooftop Koutoubia views</div>
+            <div class="tl-tags"><span class="tl-tag tag-sight">Explore & shop</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tl-transport">🚶 Walk ~15 min to La Terrasse du Jardin · free</div>
+    <div class="tl-card-inner">
+      <div class="timeline">
+        <div class="tl-event">
+          <div class="tl-time">13:00</div>
+          <div class="tl-body">
+            <div class="tl-name">Lunch · La Terrasse du Jardin</div>
+            <div class="tl-note">⭐ 4.9 · multi-level rooftop · rfissa, kofta tagine, Moroccan crepes · laterrassedujardin.ma · +212 7 73 77 13 56 · book for 6</div>
+            <div class="tl-tags"><span class="tl-tag tag-eat">Lunch</span></div>
+            <div class="tl-cost"><span class="tl-cost-mad">200–280 MAD</span><span class="tl-cost-eur">≈ €19–27</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tl-transport">🚶 Walk ~15 min back to riad · change & pack swimsuits! 🩱</div>
+    <div class="tl-card-inner">
+      <div class="timeline">
+        <div class="tl-event">
+          <div class="tl-time">15:30</div>
+          <div class="tl-body">
+            <div class="tl-name">Lalla Zehra — Farm Cooking Class & Pool</div>
+            <div class="tl-note">lallazehra.com · olive grove farm 23km out · welcome tea & pastries · bread-making · tagine + zaalouk · swim while tagines simmer · eat at family table · towels & round-trip transport all included</div>
+            <div class="tl-tags"><span class="tl-tag tag-cook">Cooking class</span><span class="tl-tag tag-pool">Pool 🏊</span><span class="tl-tag tag-incl">All inclusive</span></div>
+            <div class="tl-cost"><span class="tl-cost-mad">600 MAD</span><span class="tl-cost-eur">≈ €57 · all-in</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tl-riad">🏠 Return transport to riad included in 600 MAD · ~20:30 drop-off</div>
+  </div>
+  <div class="tl-total">
+    <div class="tl-total-label">Day 3 total pp<br><span style="font-weight:300;font-size:11px">El Badii + lunch + Lalla Zehra (all transport incl.)</span></div>
+    <div class="tl-total-right"><div class="tl-total-mad">900–980 MAD</div><div class="tl-total-eur">≈ €86–93</div></div>
+  </div>
+</div>
+
+<!-- ═══ DAY 4 ═══ -->
+<div id="view-day4" class="day-view fade-in">
+  <div class="day-header-block">
+    <div class="day-header-top mid-green">
+      <div class="day-label">Day 4 · Saturday 30 May</div>
+      <div class="day-title-large">🏔 Private Atlas Mountains & 5 Valleys Tour · Folk Marrakech</div>
+    </div>
+    <div class="day-header-bottom">Viator ref: 25014P1 · €474 total = €79 pp · pickup from riad at 08:00</div>
+  </div>
+  <div class="tl-note-box fitness">🩵 <strong>Fitness note:</strong> The hike is fully flexible — the guide sets pace to the slowest walker. No camel ride on this tour. Add a note when booking on Viator. Comfortable trainers are fine.</div>
+  <div class="tl-card">
+    <div class="tl-card-inner">
+      <div class="timeline">
+        <div class="tl-event">
+          <div class="tl-time">08:00</div>
+          <div class="tl-body">
+            <div class="tl-name">Private Atlas Mountains & 5 Valleys Tour</div>
+            <div class="tl-note">Private minivan for 6 · pickup from riad · English-speaking guide · all inclusive</div>
+            <div class="tl-tags"><span class="tl-tag tag-trip">Day trip</span><span class="tl-tag tag-incl">Breakfast incl.</span><span class="tl-tag tag-incl">Lunch incl.</span><span class="tl-tag tag-incl">Transport incl.</span></div>
+            <div class="tl-cost"><span class="tl-cost-mad">830 MAD</span><span class="tl-cost-eur">= €79 pp (€474 ÷ 6)</span></div>
+          </div>
+        </div>
+        <div class="tl-event">
+          <div class="tl-time">~10:00</div>
+          <div class="tl-body">
+            <div class="tl-name">Argan oil cooperative — breakfast & demo</div>
+            <div class="tl-note">Mint tea · honey · amlou · fresh bread · learn about argan oil production</div>
+            <div class="tl-tags"><span class="tl-tag tag-incl">Included</span></div>
+          </div>
+        </div>
+        <div class="tl-event">
+          <div class="tl-time">~11:30</div>
+          <div class="tl-body">
+            <div class="tl-name">Guided walk — Berber villages & 5 valleys</div>
+            <div class="tl-note">Flexible pace · rest when needed · Mount Toubkal views · 60–90 min walking</div>
+            <div class="tl-tags"><span class="tl-tag tag-incl">Included</span></div>
+          </div>
+        </div>
+        <div class="tl-event">
+          <div class="tl-time">~13:30</div>
+          <div class="tl-body">
+            <div class="tl-name">Home-cooked Berber lunch at family home</div>
+            <div class="tl-note">Soup · salad · tagine (vegetarian avail.) · couscous · fruit · mint tea by the river</div>
+            <div class="tl-tags"><span class="tl-tag tag-eat">Lunch</span><span class="tl-tag tag-incl">Included</span></div>
+          </div>
+        </div>
+        <div class="tl-event">
+          <div class="tl-time">~17:30</div>
+          <div class="tl-body">
+            <div class="tl-name">Return to Marrakech · drop-off at riad · freshen up</div>
+            <div class="tl-tags"><span class="tl-tag tag-incl">Transport included</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tl-transport">🚕 Riad → Folk Marrakech · taxi ~12 MAD pp · ~20 min to Guéliz</div>
+    <div class="tl-card-inner">
+      <div class="timeline">
+        <div class="tl-event">
+          <div class="tl-time">19:30</div>
+          <div class="tl-body">
+            <div class="tl-name">Dinner · Folk Marrakech</div>
+            <div class="tl-note">⭐ 4.9 · gnawa + belly dance show from 8:30pm · 🎉 Saturday night — brilliant! · happy hour 7–9pm · folkmarrakech.com · +212 6 62 49 41 00 · book ahead</div>
+            <div class="tl-tags"><span class="tl-tag tag-eat">Dinner</span><span class="tl-tag" style="background:#FCE8F0;color:#7A1535">Gnawa show 🎶</span><span class="tl-tag" style="background:#E1F5EE;color:#085041">Happy hour</span></div>
+            <div class="tl-cost"><span class="tl-cost-mad">250–350 MAD</span><span class="tl-cost-eur">≈ €24–33</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tl-riad">🏠 Folk → riad · taxi ~12 MAD pp · ~20 min · taxis always outside Folk</div>
+  </div>
+  <div class="tl-total">
+    <div class="tl-total-label">Day 4 total pp<br><span style="font-weight:300;font-size:11px">private tour (all-incl.) + taxis + dinner</span></div>
+    <div class="tl-total-right"><div class="tl-total-mad">1,104–1,204 MAD</div><div class="tl-total-eur">≈ €105–115</div></div>
+  </div>
+</div>
+
+<!-- ═══ DAY 5 ═══ -->
+<div id="view-day5" class="day-view fade-in">
+  <div class="day-header-block">
+    <div class="day-header-top green">
+      <div class="day-label">Day 5 · Sunday 31 May · Slow Day 🌸</div>
+      <div class="day-title-large">Bacha Coffee · Bahia Palace · Mouassine · Maison de la Photo · Le Jardin</div>
+    </div>
+    <div class="day-header-bottom">⚠️ Queue outside Dar El Bacha at 9am! Open Sundays ✓ — closed Mondays.</div>
+  </div>
+  <div class="tl-note-box warn">⚠️ All coffee reservations at Bacha Coffee are gone by noon. Arrive at 9am to queue before opening at 10am. It is absolutely worth it!</div>
+  <div class="tl-card">
+    <div class="tl-card-inner">
+      <div class="timeline">
+        <div class="tl-event">
+          <div class="tl-time">09:00</div>
+          <div class="tl-body">
+            <div class="tl-name">Queue outside Dar El Bacha</div>
+            <div class="tl-note">Arrive 9am · opens 10am · all reservations gone by noon!</div>
+            <div class="tl-cost"><span class="tl-cost-mad">Free</span></div>
+          </div>
+        </div>
+        <div class="tl-event">
+          <div class="tl-time">10:00</div>
+          <div class="tl-body">
+            <div class="tl-name">Musée Dar El Bacha + Bacha Coffee</div>
+            <div class="tl-note">darbacha.com · 60 MAD combined ticket (cash) · collect pager at café · explore stunning palace while waiting · 200+ single-origin coffees · Petit Déjeuner set menu ~190 MAD</div>
+            <div class="tl-tags"><span class="tl-tag tag-sight">Palace museum</span><span class="tl-tag tag-eat">Coffee</span><span class="tl-tag" style="background:#f5f5f5;color:#555">Cash · 60 MAD entry</span></div>
+            <div class="tl-cost"><span class="tl-cost-mad">250–300 MAD</span><span class="tl-cost-eur">≈ €24–29</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tl-transport">🚶 Walk ~12 min to Bahia Palace · free</div>
+    <div class="tl-card-inner">
+      <div class="timeline">
+        <div class="tl-event">
+          <div class="tl-time">11:30</div>
+          <div class="tl-body">
+            <div class="tl-name">Bahia Palace</div>
+            <div class="tl-note">19th-c Grand Vizier's palace · stunning carved plasterwork & zellij tilework · buy ticket at door</div>
+            <div class="tl-tags"><span class="tl-tag tag-sight">Sightseeing</span></div>
+            <div class="tl-cost"><span class="tl-cost-mad">70 MAD</span><span class="tl-cost-eur">≈ €6.70</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tl-transport">🚶 Walk ~15 min to Mouassine neighbourhood · free</div>
+    <div class="tl-card-inner">
+      <div class="timeline">
+        <div class="tl-event">
+          <div class="tl-time">12:30</div>
+          <div class="tl-body">
+            <div class="tl-name">Mouassine neighbourhood wander</div>
+            <div class="tl-note">Quieter, more upscale souks · Mouassine fountain square · independent boutiques · far less hectic than Semmarine</div>
+            <div class="tl-tags"><span class="tl-tag tag-sight">Explore</span><span class="tl-tag tag-slow">Slow day 🌸</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tl-transport">🚶 Walk ~5 min to Café des Épices · free</div>
+    <div class="tl-card-inner">
+      <div class="timeline">
+        <div class="tl-event">
+          <div class="tl-time">13:30</div>
+          <div class="tl-body">
+            <div class="tl-name">Lunch · Café des Épices</div>
+            <div class="tl-note">⭐ 4.5 · rooftop over the spice square · simple fresh Moroccan food · very relaxed · no reservation needed</div>
+            <div class="tl-tags"><span class="tl-tag tag-eat">Lunch</span></div>
+            <div class="tl-cost"><span class="tl-cost-mad">80–150 MAD</span><span class="tl-cost-eur">≈ €8–14</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tl-transport">🚶 Walk ~3 min to Maison de la Photographie · free</div>
+    <div class="tl-card-inner">
+      <div class="timeline">
+        <div class="tl-event">
+          <div class="tl-time">14:30</div>
+          <div class="tl-body">
+            <div class="tl-name">Maison de la Photographie</div>
+            <div class="tl-note">Historical photos of Morocco 1870–1950 · rooftop café with Atlas views · 46 Rue Ahal Fes · open daily ✓</div>
+            <div class="tl-tags"><span class="tl-tag tag-sight">Sightseeing</span></div>
+            <div class="tl-cost"><span class="tl-cost-mad">50 MAD</span><span class="tl-cost-eur">≈ €4.75</span></div>
+          </div>
+        </div>
+        <div class="tl-event">
+          <div class="tl-time">16:00</div>
+          <div class="tl-body">
+            <div class="tl-name">Afternoon at leisure</div>
+            <div class="tl-note">Riad rooftop · quiet café · last souk browse · you've earned it after 4 big days!</div>
+            <div class="tl-tags"><span class="tl-tag tag-slow">Slow day 🌸</span></div>
+            <div class="tl-cost"><span class="tl-cost-mad">30–50 MAD</span><span class="tl-cost-eur">≈ €3–5</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tl-transport">🚶 Walk ~12 min through Mouassine to Le Jardin · free</div>
+    <div class="tl-card-inner">
+      <div class="timeline">
+        <div class="tl-event">
+          <div class="tl-time">19:30</div>
+          <div class="tl-body">
+            <div class="tl-name">Dinner · Le Jardin</div>
+            <div class="tl-note">⭐ 4.5 · beautiful open-air courtyard garden · big leafy trees · tagines & salads · 32 Souk Jeld Sidi Abdelaziz · book ahead for 6 · wine available</div>
+            <div class="tl-tags"><span class="tl-tag tag-eat">Dinner</span><span class="tl-tag" style="background:#EAF3DE;color:#27500A">Garden courtyard</span><span class="tl-tag" style="background:#E1F5EE;color:#085041">Wine available</span></div>
+            <div class="tl-cost"><span class="tl-cost-mad">200–350 MAD</span><span class="tl-cost-eur">≈ €19–33</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tl-riad">🏠 Le Jardin → riad · walk ~15 min or taxi ~5 MAD pp</div>
+  </div>
+  <div class="tl-total">
+    <div class="tl-total-label">Day 5 total pp<br><span style="font-weight:300;font-size:11px">Bacha Coffee + Bahia + Mouassine + lunch + Maison + dinner</span></div>
+    <div class="tl-total-right"><div class="tl-total-mad">580–920 MAD</div><div class="tl-total-eur">≈ €55–88</div></div>
+  </div>
+</div>
+
+<!-- ═══ DAY 6 ═══ -->
+<div id="view-day6" class="day-view fade-in">
+  <div class="day-header-block">
+    <div class="day-header-top mid-green">
+      <div class="day-label">Day 6 · Monday 1 June · Departure</div>
+      <div class="day-title-large">Mythic Oriental Spa · Farewell Lunch · ✈ Flight Home 19:15</div>
+    </div>
+    <div class="day-header-bottom">⚠️ Leave riad by 17:00 sharp for 19:15 flight</div>
+  </div>
+  <div class="tl-card">
+    <div class="tl-card-inner">
+      <div class="timeline">
+        <div class="tl-event">
+          <div class="tl-time">09:30</div>
+          <div class="tl-body">
+            <div class="tl-name">Leisurely morning · Koutoubia Gardens stroll</div>
+            <div class="tl-note">~15 min walk from riad · free · beautiful morning light · last gift-buying near Bab Agnaou</div>
+            <div class="tl-cost"><span class="tl-cost-mad">Free</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tl-transport">🚶 Walk ~12 min through Mouassine to Mythic Oriental Spa · free</div>
+    <div class="tl-card-inner">
+      <div class="timeline">
+        <div class="tl-event">
+          <div class="tl-time">11:00</div>
+          <div class="tl-body">
+            <div class="tl-name">Spa #2 · Mythic Oriental Spa — Hammam & Massage</div>
+            <div class="tl-note">⭐ 4.8 · hammam → massage → rooftop mint tea · ~2 hrs · Derb Esaleh, Riad Laarouss · mythicoriental-spa.com · +212 5 24 38 41 61 · Monday open ✓ · book ahead for 6 · perfect send-off!</div>
+            <div class="tl-tags"><span class="tl-tag tag-spa">Spa</span><span class="tl-tag" style="background:#EAF3DE;color:#27500A">Open Mondays ✓</span></div>
+            <div class="tl-cost"><span class="tl-cost-mad">400–600 MAD</span><span class="tl-cost-eur">≈ €38–57</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tl-transport">🚶 Walk ~10 min to Café Dar L'Hssira · free</div>
+    <div class="tl-card-inner">
+      <div class="timeline">
+        <div class="tl-event">
+          <div class="tl-time">13:30</div>
+          <div class="tl-body">
+            <div class="tl-name">Farewell lunch · Café Dar L'Hssira</div>
+            <div class="tl-note">⭐ 4.7 · rooftop · harira, tagines, couscous, pastilla · best value in Marrakech · 13 Rue Riad Zitoun el Jdid · cash only · no reservation needed</div>
+            <div class="tl-tags"><span class="tl-tag tag-eat">Lunch</span><span class="tl-tag" style="background:#f5f5f5;color:#555">Cash only</span></div>
+            <div class="tl-cost"><span class="tl-cost-mad">50–100 MAD</span><span class="tl-cost-eur">≈ €5–10</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tl-transport">🚶 Walk ~5 min back to riad · collect bags</div>
+    <div class="tl-card-inner">
+      <div class="timeline">
+        <div class="tl-event">
+          <div class="tl-time">17:00</div>
+          <div class="tl-body">
+            <div class="tl-name">🚕 Leave riad for airport · ✈ 19:15 departure</div>
+            <div class="tl-note">⚠️ Leave by 17:00 sharp — allow 2 hrs for check-in · pre-agreed return taxi driver</div>
+            <div class="tl-cost"><span class="tl-cost-mad">25 MAD</span><span class="tl-cost-eur">≈ €2.38</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tl-riad">✈ Bon voyage! Marrakech will miss you 🌿</div>
+  </div>
+  <div class="tl-total">
+    <div class="tl-total-label">Day 6 total pp<br><span style="font-weight:300;font-size:11px">spa + farewell lunch + airport taxi</span></div>
+    <div class="tl-total-right"><div class="tl-total-mad">475–725 MAD</div><div class="tl-total-eur">≈ €45–69</div></div>
+  </div>
+</div>
+
+<!-- ═══ BOOKINGS ═══ -->
+<div id="view-bookings" class="day-view fade-in">
+  <div style="margin-bottom:20px;">
+    <div style="font-family:'Playfair Display',serif;font-size:26px;color:var(--text);margin-bottom:6px;">Booking checklist</div>
+    <div style="font-size:13px;color:var(--text-muted);">Tap each item to mark as done</div>
+  </div>
+
+  <div class="booking-list">
+    <div class="booking-item">
+      <div class="booking-check" onclick="toggleCheck(this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="booking-body"><div class="booking-day">Day 4 · 30 May</div><div class="booking-name">Atlas Mountains private tour</div><div class="booking-detail">Viator ref: 25014P1 · €474 total = €79 pp · Add fitness note in booking notes</div></div>
+    </div>
+    <div class="booking-item">
+      <div class="booking-check" onclick="toggleCheck(this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="booking-body"><div class="booking-day">Day 2 · 28 May</div><div class="booking-name">Jardin Majorelle — timed tickets</div><div class="booking-detail">tickets.jardinmajorelle.com (official site only)</div></div>
+    </div>
+    <div class="booking-item">
+      <div class="booking-check" onclick="toggleCheck(this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="booking-body"><div class="booking-day">Day 1 · 27 May</div><div class="booking-name">Le Bain de Kasbah — hammam for 6</div><div class="booking-detail">+212 6 68 13 05 77 · Mon–Sat 9–7pm</div></div>
+    </div>
+    <div class="booking-item">
+      <div class="booking-check" onclick="toggleCheck(this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="booking-body"><div class="booking-day">Day 6 · 1 June</div><div class="booking-name">Mythic Oriental Spa — hammam for 6</div><div class="booking-detail">+212 5 24 38 41 61 · Open Mondays ✓</div></div>
+    </div>
+    <div class="booking-item">
+      <div class="booking-check" onclick="toggleCheck(this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="booking-body"><div class="booking-day">Day 3 · 29 May</div><div class="booking-name">Lalla Zehra — cooking class & pool</div><div class="booking-detail">lallazehra.com · 600 MAD all-inclusive · pack swimsuits!</div></div>
+    </div>
+    <div class="booking-item">
+      <div class="booking-check" onclick="toggleCheck(this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="booking-body"><div class="booking-day">Day 1 · 27 May</div><div class="booking-name">La Pergola dinner</div><div class="booking-detail">+212 5 24 42 96 46 · riad-monceau.com · live jazz 7:30pm</div></div>
+    </div>
+    <div class="booking-item">
+      <div class="booking-check" onclick="toggleCheck(this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="booking-body"><div class="booking-day">Day 2 · 28 May</div><div class="booking-name">Le Slimana Rooftop dinner</div><div class="booking-detail">+212 5 24 42 91 69 · leslimana.com</div></div>
+    </div>
+    <div class="booking-item">
+      <div class="booking-check" onclick="toggleCheck(this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="booking-body"><div class="booking-day">Day 4 · 30 May</div><div class="booking-name">Folk Marrakech dinner</div><div class="booking-detail">+212 6 62 49 41 00 · folkmarrakech.com · Saturday night gnawa show!</div></div>
+    </div>
+    <div class="booking-item">
+      <div class="booking-check" onclick="toggleCheck(this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="booking-body"><div class="booking-day">Day 5 · 31 May</div><div class="booking-name">Le Jardin dinner</div><div class="booking-detail">32 Souk Jeld Sidi Abdelaziz · book ahead for 6</div></div>
+    </div>
+    <div class="booking-item">
+      <div class="booking-check" onclick="toggleCheck(this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="booking-body"><div class="booking-day">Day 3 · 29 May</div><div class="booking-name">La Terrasse du Jardin lunch for 6</div><div class="booking-detail">+212 7 73 77 13 56 · laterrassedujardin.ma</div></div>
+    </div>
+    <div class="booking-item">
+      <div class="booking-check" onclick="toggleCheck(this)"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="booking-body"><div class="booking-day">Day 1 · 27 May</div><div class="booking-name">Coco Rooftop brunch for 6</div><div class="booking-detail">+212 6 88 46 35 91 · opens 11:30</div></div>
+    </div>
+  </div>
+
+  <div style="margin-top:24px;">
+    <div class="info-highlight">💵 <strong>Cash-only venues — carry dirhams daily:</strong><br>Dar Cherifa · Café Dar L'Hssira · Dar El Bacha (60 MAD) · Medersa Ben Youssef (50 MAD) · Saadian Tombs (100 MAD) · Palais El Badii (100 MAD) · Bahia Palace (70 MAD)</div>
+    <div class="info-card">
+      <h4>💡 Useful reminders</h4>
+      <ul>
+        <li>Airport taxi: agree fare before getting in · ≈ €2.38 pp each way</li>
+        <li>Alcohol: 80–150 MAD per cocktail or glass of wine</li>
+        <li>YSL Museum: optional +130 MAD on Day 2 (open Thursday ✓)</li>
+        <li>Bacha Coffee: queue at 9am, opens 10am, closed Mondays</li>
+        <li>Folk Marrakech gnawa show: starts 8:30pm · happy hour 7–9pm</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FOOD GUIDE ═══ -->
+<div id="view-food" class="day-view fade-in">
+  <div style="margin-bottom:20px;">
+    <div style="font-family:'Playfair Display',serif;font-size:26px;color:var(--text);margin-bottom:6px;">Food Guide</div>
+    <div style="font-size:13px;color:var(--text-muted);">What to expect at each restaurant</div>
+  </div>
+
+  <div class="food-card">
+    <div class="food-day">Day 1 · Brunch</div>
+    <div class="food-name">Coco Rooftop</div>
+    <div class="food-meal">Brunch · 200–280 MAD pp</div>
+    <div class="food-desc">A generous Moroccan spread-style brunch — msemen flatbreads, honey, amlou, fresh juices, eggs and pastries. Light, colourful and perfect after a long morning of travel and sightseeing.</div>
+  </div>
+
+  <div class="food-card">
+    <div class="food-day">Day 1 · Dinner</div>
+    <div class="food-name">La Pergola & Le Bistro Arabe</div>
+    <div class="food-meal">Dinner · 400–500 MAD pp · Live jazz from 7:30pm</div>
+    <div class="food-desc">Franco-Moroccan fusion in an elegant riad setting. Refined takes on Moroccan classics — slow-cooked lamb, beautifully spiced tagines — alongside French bistro dishes. Cocktails and live jazz make it feel celebratory.</div>
+  </div>
+
+  <div class="food-card">
+    <div class="food-day">Day 2 · Lunch</div>
+    <div class="food-name">Dar Cherifa</div>
+    <div class="food-meal">Lunch · 200–350 MAD pp · Cash only</div>
+    <div class="food-desc">Simple, homestyle Moroccan in one of the most atmospheric spaces in the medina. Short menu — salads, soups, tagines, bastilla — but everything made with care. The food is secondary to the experience of eating in a 16th-century candlelit courtyard.</div>
+  </div>
+
+  <div class="food-card">
+    <div class="food-day">Day 2 · Dinner</div>
+    <div class="food-name">Le Slimana Rooftop</div>
+    <div class="food-meal">Dinner · 250–400 MAD pp · Wine available</div>
+    <div class="food-desc">Modern Moroccan-Mediterranean fusion — creative, beautifully plated. The caramelised octopus is a standout, the lamb ravioli blends French technique with Moroccan spicing, and the pistachio crème brûlée is a lovely East-meets-West finish. A step above the typical medina rooftop.</div>
+  </div>
+
+  <div class="food-card">
+    <div class="food-day">Day 3 · Lunch</div>
+    <div class="food-name">La Terrasse du Jardin</div>
+    <div class="food-meal">Lunch · 200–280 MAD pp</div>
+    <div class="food-desc">Honest, hearty traditional Moroccan. Rfissa is a rich dish of shredded chicken, lentils and fenugreek over msemen — deeply comforting. Kofta tagine brings spiced minced lamb in tomato-egg sauce. The Moroccan crepes with honey and butter are irresistible for dessert.</div>
+  </div>
+
+  <div class="food-card">
+    <div class="food-day">Day 3 · Dinner (you cook it!)</div>
+    <div class="food-name">Lalla Zehra Farm</div>
+    <div class="food-meal">Cooking class + dinner · 600 MAD all-inclusive</div>
+    <div class="food-desc">You'll make a classic Moroccan tagine of your choice (chicken with preserved lemon & olives, or lamb with prunes & almonds) and zaalouk — a smoky, silky aubergine and tomato dip. Everything cooked over charcoal in traditional clay pots. Farm-fresh, Berber family recipes. One of the most memorable meals of the trip.</div>
+  </div>
+
+  <div class="food-card">
+    <div class="food-day">Day 4 · Lunch (included in tour)</div>
+    <div class="food-name">Home-cooked Berber lunch — Atlas Mountains</div>
+    <div class="food-meal">Included in tour price · vegetarian available</div>
+    <div class="food-desc">The most authentic eating of the whole trip. A Berber family spread: harira soup, fresh salads dressed with cumin and lemon, a slow-cooked mountain tagine, couscous with seven vegetables, and seasonal fruit. Simple, nourishing, made from whatever's in the valley that day.</div>
+  </div>
+
+  <div class="food-card">
+    <div class="food-day">Day 4 · Dinner</div>
+    <div class="food-name">Folk Marrakech</div>
+    <div class="food-meal">Dinner · 250–350 MAD pp · Gnawa show from 8:30pm</div>
+    <div class="food-desc">Contemporary Moroccan with a fun, buzzy atmosphere drawing on Berber, Arab and Andalusian influences — pastilla, tagines, couscous — presented with a modern edge. The food plays second fiddle to the gnawa music and belly dancing, but it's genuinely good. Cocktails flow freely.</div>
+  </div>
+
+  <div class="food-card">
+    <div class="food-day">Day 5 · Lunch</div>
+    <div class="food-name">Café des Épices</div>
+    <div class="food-meal">Lunch · 80–150 MAD pp · No reservation needed</div>
+    <div class="food-desc">Relaxed and simple — exactly what you want on a slow day. Light Moroccan café food: fresh salads, kefta brochettes, briouats (crispy parcels filled with cheese or kofta), tagines. Nothing complicated, everything fresh. The rooftop setting over the spice square is half the meal.</div>
+  </div>
+
+  <div class="food-card">
+    <div class="food-day">Day 5 · Dinner</div>
+    <div class="food-name">Le Jardin</div>
+    <div class="food-meal">Dinner · 200–350 MAD pp · Wine available</div>
+    <div class="food-desc">Beautiful open-air courtyard garden restaurant balancing traditional Moroccan with Mediterranean influences. Tagines are the heart of the menu — tender, aromatic, slow-cooked. Salads are fresh and colourful. The setting under the trees at night is genuinely magical, making it the perfect wind-down dinner.</div>
+  </div>
+
+  <div class="food-card">
+    <div class="food-day">Day 6 · Farewell lunch</div>
+    <div class="food-name">Café Dar L'Hssira</div>
+    <div class="food-meal">Lunch · 50–100 MAD pp · Cash only</div>
+    <div class="food-desc">Pure, unfussy Moroccan home cooking at its best. Harira to start — the classic tomato, lentil and chickpea soup with a squeeze of lemon. Then tagines, couscous, or pastilla (the showstopper pigeon or chicken pie dusted with icing sugar and cinnamon). A proper send-off that tastes like Morocco itself.</div>
+  </div>
+
+  <div class="info-green" style="margin-top:16px;">
+    🌿 <strong>The thread through every meal:</strong> slow-cooked, aromatic, spiced with warmth rather than heat — cumin, coriander, saffron, preserved lemon, ras el hanout. You'll eat extraordinarily well.
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<script>
+function showView(id) {
+  // Hide all
+  document.querySelectorAll('.overview, .day-view').forEach(el => {
+    el.classList.remove('visible');
+  });
+  // Deactivate all nav buttons
+  document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+
+  // Show target
+  const target = document.getElementById('view-' + id);
+  if (target) {
+    target.classList.add('visible');
+    // re-trigger animation
+    target.classList.remove('fade-in');
+    void target.offsetWidth;
+    target.classList.add('fade-in');
+  }
+
+  // Activate correct nav button
+  const btns = document.querySelectorAll('.nav-btn');
+  const labels = ['overview','day1','day2','day3','day4','day5','day6','bookings','food'];
+  const idx = labels.indexOf(id);
+  if (idx >= 0 && btns[idx]) btns[idx].classList.add('active');
+
+  // Scroll nav button into view
+  if (btns[idx]) {
+    btns[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleCheck(el) {
+  el.classList.toggle('done');
+}
+</script>
+</body>
+</html>
