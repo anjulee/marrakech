@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marrakech · Ladies' Trip 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green:#1D9E75;--green-dark:#085041;--green-light:#E1F5EE;--green-mid:#2D7A5E;
+  --amber:#BA7517;--amber-light:#FAEEDA;--amber-dark:#633806;--amber-mid:#854F0B;
+  --coral:#D85A30;--purple:#7F77DD;--purple-light:#EEEDFE;--purple-dark:#3C3489;
+  --blue-light:#E6F1FB;--blue-dark:#0C447C;
+  --transport:#F0EDE4;--transport-t:#5F5E5A;
+  --border:#E5E2DA;--text:#1a1a18;--text-m:#7a7870;--text-l:#a8a49c;
+  --bg:#FAFAF7;--card:#FFFFFF;--riad-border:#9FE1CB;
+  --warn-bg:#FFF5E6;--warn-fg:#633806;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-weight:300;}
+
+.hero{background:linear-gradient(160deg,#0a3d2e 0%,#1D9E75 50%,#2ec48f 100%);padding:56px 24px 72px;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");}
+.hero-eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;color:rgba(255,255,255,.6);text-transform:uppercase;margin-bottom:14px;position:relative;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(34px,8vw,60px);font-weight:400;color:white;line-height:1.1;margin-bottom:10px;position:relative;}
+.hero h1 em{font-style:italic;color:#9FE1CB;}
+.hero-sub{font-size:14px;color:rgba(255,255,255,.75);font-weight:300;position:relative;margin-bottom:28px;}
+.hero-pills{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;position:relative;}
+.hero-pill{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:white;font-size:12px;padding:5px 14px;border-radius:99px;backdrop-filter:blur(8px);}
+
+.day-nav{position:sticky;top:0;z-index:100;background:rgba(250,250,247,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 12px;display:flex;gap:0;overflow-x:auto;scrollbar-width:none;}
+.day-nav::-webkit-scrollbar{display:none;}
+.nav-btn{flex-shrink:0;background:none;border:none;cursor:pointer;padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;color:var(--text-m);border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;display:flex;flex-direction:column;align-items:center;gap:2px;}
+.nav-btn .nav-date{font-size:10px;font-family:'DM Mono',monospace;}
+.nav-btn.active{color:var(--green);border-bottom-color:var(--green);font-weight:500;}
+.nav-btn:hover:not(.active){color:var(--text);}
+
+.main{max-width:800px;margin:0 auto;padding:28px 16px 80px;}
+
+.map-section{margin-bottom:20px;}
+.map-section h3{font-family:'Playfair Display',serif;font-size:15px;font-weight:400;color:var(--text);margin-bottom:8px;}
+.map-container{border-radius:14px;overflow:hidden;border:1px solid var(--border);height:320px;background:#e8e4dc;}
+.map-container iframe{width:100%;height:100%;border:none;}
+.map-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;}
+.map-leg{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-m);}
+.map-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+
+.overview{display:none;}
+.overview.visible{display:block;}
+.ov-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;}
+@media(max-width:500px){.ov-grid{grid-template-columns:repeat(2,1fr);}}
+.ov-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;cursor:pointer;transition:all .2s;display:block;text-decoration:none;}
+.ov-card:hover{box-shadow:0 8px 32px rgba(0,0,0,.1);transform:translateY(-2px);}
+.ov-day-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--green);letter-spacing:.08em;margin-bottom:4px;}
+.ov-date{font-size:11px;color:var(--text-m);margin-bottom:6px;}
+.ov-title{font-family:'Playfair Display',serif;font-size:13px;color:var(--text);line-height:1.4;margin-bottom:8px;}
+.ov-highlights{display:flex;flex-direction:column;gap:3px;}
+.ov-hl{font-size:11px;color:var(--text-m);display:flex;align-items:center;gap:4px;}
+.ov-hl::before{content:'·';color:var(--green);font-size:14px;line-height:1;}
+
+.summary-box{background:var(--green);border-radius:14px;padding:20px;color:white;margin-bottom:16px;}
+.summary-box h3{font-family:'Playfair Display',serif;font-size:17px;font-weight:400;margin-bottom:14px;color:white;}
+.sum-totals{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.sum-col{text-align:center;}
+.sum-label{font-size:9px;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.1em;margin-bottom:3px;font-family:'DM Mono',monospace;}
+.sum-val{font-size:20px;font-weight:500;color:white;}
+.sum-sub{font-size:10px;color:rgba(255,255,255,.55);}
+
+.riad-info-box{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:16px;}
+.riad-info-box h4{font-family:'Playfair Display',serif;font-size:16px;font-weight:400;color:var(--text);margin-bottom:4px;}
+.riad-address{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-m);margin-bottom:10px;}
+.riad-pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;}
+.riad-pill{font-size:11px;padding:3px 10px;border-radius:99px;background:var(--green-light);color:var(--green-dark);}
+.riad-desc{font-size:13px;color:var(--text-m);line-height:1.7;}
+.riad-link{display:inline-block;margin-top:10px;font-size:12px;color:var(--green);text-decoration:none;font-weight:500;}
+.riad-link:hover{text-decoration:underline;}
+
+.day-view{display:none;}
+.day-view.visible{display:block;}
+.day-header-block{border-radius:14px;overflow:hidden;margin-bottom:16px;}
+.day-header-top{padding:18px 18px 14px;color:white;}
+.day-header-top.green{background:var(--green);}
+.day-header-top.mid-green{background:var(--green-mid);}
+.day-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.15em;color:rgba(255,255,255,.65);text-transform:uppercase;margin-bottom:5px;}
+.day-title-large{font-family:'Playfair Display',serif;font-size:20px;font-weight:400;color:white;line-height:1.3;}
+.day-header-bottom{background:var(--green-light);padding:9px 18px;font-size:12px;color:var(--green-dark);}
+
+.tl-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:4px;}
+.tl-card-inner{padding:0 14px;}
+.tl-transport{background:var(--transport);padding:7px 14px;font-size:12px;color:var(--transport-t);}
+.tl-event{display:grid;grid-template-columns:50px 1fr;gap:0 10px;padding:11px 0;border-bottom:1px solid var(--border);}
+.tl-event:last-of-type{border-bottom:none;}
+.tl-time{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-l);padding-top:2px;font-weight:500;}
+.tl-name{font-size:14px;font-weight:500;color:var(--text);margin-bottom:3px;line-height:1.4;}
+.tl-note{font-size:12px;color:var(--text-m);line-height:1.6;margin-bottom:5px;}
+.tl-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px;}
+.tl-tag{font-size:10px;padding:2px 8px;border-radius:99px;font-weight:500;}
+.tag-sight{background:var(--green-light);color:var(--green-dark);}
+.tag-eat{background:#FAECE7;color:#712B13;}
+.tag-spa{background:var(--purple-light);color:var(--purple-dark);}
+.tag-trip{background:var(--amber-light);color:var(--amber-dark);}
+.tag-cook{background:var(--blue-light);color:var(--blue-dark);}
+.tag-incl{background:#F0F0F0;color:#555;}
+.tag-slow{background:#FCE8F0;color:#7A1535;}
+.tl-cost{margin-top:5px;display:flex;align-items:baseline;gap:8px;}
+.tl-cost-mad{font-size:13px;font-weight:500;color:var(--text);}
+.tl-cost-eur{font-size:11px;color:var(--text-m);}
+.tl-map-link{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--green);text-decoration:none;margin-top:5px;font-weight:500;}
+.tl-map-link:hover{text-decoration:underline;}
+.tl-note-box{border-radius:8px;padding:8px 12px;font-size:12px;line-height:1.6;margin:4px 0;}
+.tl-note-box.fitness{background:var(--blue-light);color:var(--blue-dark);}
+.tl-note-box.warn{background:var(--warn-bg);color:var(--warn-fg);}
+.tl-note-box.opt{background:#EAF3DE;color:#27500A;}
+.tl-riad{background:var(--green-light);border-top:1px solid var(--riad-border);padding:9px 14px;font-size:12px;color:var(--green-dark);font-weight:500;}
+.tl-total{background:var(--amber-light);border-radius:10px;padding:11px 14px;margin:10px 0 22px;display:flex;justify-content:space-between;align-items:center;}
+.tl-total-label{font-size:12px;font-weight:500;color:var(--amber-dark);}
+.tl-total-sub{font-weight:300;font-size:11px;}
+.tl-total-right{text-align:right;}
+.tl-total-mad{font-size:14px;font-weight:600;color:var(--amber-dark);}
+.tl-total-eur{font-size:11px;color:var(--amber-mid);margin-top:1px;}
+
+.booking-list{display:flex;flex-direction:column;gap:8px;}
+.booking-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px 14px;display:flex;align-items:flex-start;gap:11px;}
+.bcheck{width:22px;height:22px;border-radius:6px;background:var(--green-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;cursor:pointer;transition:background .2s;}
+.bcheck.done{background:var(--green);}
+.bcheck svg{display:none;}
+.bcheck.done svg{display:block;}
+.bbody{flex:1;}
+.bday{font-family:'DM Mono',monospace;font-size:10px;color:var(--green);margin-bottom:3px;}
+.bname{font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px;}
+.bdetail{font-size:11px;color:var(--text-m);line-height:1.7;}
+.bdetail a{color:var(--green);text-decoration:none;}
+.bdetail a:hover{text-decoration:underline;}
+
+.info-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:10px;}
+.info-card h4{font-size:13px;font-weight:500;color:var(--text);margin-bottom:8px;}
+.info-card p,.info-card li{font-size:13px;color:var(--text-m);line-height:1.7;}
+.info-card ul{padding-left:16px;}
+.info-hl{background:var(--amber-light);border-radius:8px;padding:12px 14px;margin-bottom:10px;font-size:13px;color:var(--amber-dark);line-height:1.7;}
+.info-green{background:var(--green-light);border-radius:8px;padding:12px 14px;margin-bottom:10px;font-size:13px;color:var(--green-dark);line-height:1.7;}
+
+.fade-in{animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+.section-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:400;color:var(--text);margin-bottom:6px;}
+.section-sub{font-size:13px;color:var(--text-m);margin-bottom:20px;}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-eyebrow">27 May – 1 June 2026</div>
+  <h1>Marrakech<br><em>Ladies' Trip</em></h1>
+  <div class="hero-sub">6 days · 5 nights · Riad Deva Lina</div>
+  <div class="hero-pills">
+    <span class="hero-pill">2 spa days</span>
+    <span class="hero-pill">Private Atlas tour</span>
+    <span class="hero-pill">Farm cooking class</span>
+    <span class="hero-pill">Bacha Coffee</span>
+    <span class="hero-pill">Folk Marrakech</span>
+    <span class="hero-pill">Rooftop evenings</span>
+  </div>
+</div>
+
+<nav class="day-nav">
+  <button class="nav-btn active" onclick="showView('overview')">Overview<span class="nav-date">All days</span></button>
+  <button class="nav-btn" onclick="showView('day1')">Day 1<span class="nav-date">27 May</span></button>
+  <button class="nav-btn" onclick="showView('day2')">Day 2<span class="nav-date">28 May</span></button>
+  <button class="nav-btn" onclick="showView('day3')">Day 3<span class="nav-date">29 May</span></button>
+  <button class="nav-btn" onclick="showView('day4')">Day 4<span class="nav-date">30 May</span></button>
+  <button class="nav-btn" onclick="showView('day5')">Day 5<span class="nav-date">31 May</span></button>
+  <button class="nav-btn" onclick="showView('day6')">Day 6<span class="nav-date">1 June</span></button>
+  <button class="nav-btn" onclick="showView('bookings')">Bookings<span class="nav-date">Checklist</span></button>
+</nav>
+
+<div class="main">
+
+<!-- ══════════════════════════ OVERVIEW -->
+<div id="view-overview" class="overview visible fade-in">
+
+  <div class="summary-box">
+    <h3>Estimated cost per person<br><span style="font-size:13px;font-weight:300;font-family:'DM Sans',sans-serif;">(exc. accommodation and flights)</span></h3>
+    <div class="sum-totals">
+      <div class="sum-col"><div class="sum-label">Low</div><div class="sum-val">€472</div><div class="sum-sub">≈ 4,960 MAD</div></div>
+      <div class="sum-col"><div class="sum-label">Mid</div><div class="sum-val">€567</div><div class="sum-sub">≈ 5,950 MAD</div></div>
+      <div class="sum-col"><div class="sum-label">High</div><div class="sum-val">€714+</div><div class="sum-sub">+ cocktails & shopping</div></div>
+    </div>
+  </div>
+
+  <div class="riad-info-box">
+    <h4>🏡 Riad Deva Lina</h4>
+    <div class="riad-address">94 Derb Kbala, Kasbah · Marrakech 40000 · GPS: 31.61396, -7.98926</div>
+    <div class="riad-pills">
+      <span class="riad-pill">3 bedrooms</span><span class="riad-pill">3 bathrooms</span>
+      <span class="riad-pill">Seasonal pool</span><span class="riad-pill">Sun terrace</span>
+      <span class="riad-pill">Inner courtyard</span><span class="riad-pill">Free WiFi</span>
+      <span class="riad-pill">Continental breakfast</span><span class="riad-pill">Housekeeping</span>
+    </div>
+    <div class="riad-desc">A recently renovated, spacious riad in the Kasbah quarter — 1.8 km from Djemaa El Fna and right on the doorstep of the Saadian Tombs and Bahia Palace. Features a seasonal outdoor pool, sun terrace with inner courtyard views, two living rooms and air-conditioned bedrooms. A continental breakfast with local specialities, fruits and juice is served daily. Marrakech-Menara Airport is 4 km away (approx. 25 MAD taxi).</div>
+    <a class="riad-link" href="https://www.booking.com/hotel/ma/riad-deva-lina.en-gb.html" target="_blank">📖 View on Booking.com →</a>
+    &nbsp;&nbsp;
+    <a class="riad-link" href="https://maps.google.com/?q=Riad+Deva+Lina+Marrakech" target="_blank">📍 Google Maps →</a>
+  </div>
+
+  <div class="map-section">
+    <h3>📍 All stops — trip map</h3>
+    <div class="map-container">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m56!1m12!1m3!1d27044.68!2d-7.9984!3d31.627!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m41!3e2!4m5!1s0xdafee8d96179e51%3A0x5950b6534f87adb8!2sSaadian%20Tombs%2C%20Marrakech!3m2!1d31.619!2d-7.9895!4m5!1s0xdafee9248deba0f%3A0x8aef9cf1f89ca8e!2sJardin%20Majorelle%2C%20Marrakech!3m2!1d31.641!2d-8.013!4m5!1s0xdafee8d5b18be6d%3A0x6dd7d9dc3f3fa38!2sMedersa%20Ben%20Youssef%2C%20Marrakech!3m2!1d31.635!2d-7.988!4m5!1s0xdafee8d2942af039%3A0xd2fb2f0d6a8f!2sBahia%20Palace%2C%20Marrakech!3m2!1d31.621!2d-7.983!4m5!1s0xdafee8d96179e51%3A0x5950b6534f87adb8!2sPalais%20El%20Badii%2C%20Marrakech!3m2!1d31.620!2d-7.988!4m5!1s0xdafee8e0cbfc43f%3A0xf3ccab1fe1e44!2sMaison%20de%20la%20Photographie%2C%20Marrakech!3m2!1d31.636!2d-7.990!5e0!3m2!1sen!2sma!4v1700000000000!5m2!1sen!2sma"
+        allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    <div class="map-legend">
+      <div class="map-leg"><div class="map-dot" style="background:#1D9E75"></div>Sightseeing</div>
+      <div class="map-leg"><div class="map-dot" style="background:#D85A30"></div>Restaurants</div>
+      <div class="map-leg"><div class="map-dot" style="background:#7F77DD"></div>Spas</div>
+      <div class="map-leg"><div class="map-dot" style="background:#BA7517"></div>Day trips</div>
+      <div class="map-leg"><div class="map-dot" style="background:#085041"></div>Riad</div>
+    </div>
+  </div>
+
+  <div class="ov-grid">
+    <div class="ov-card" onclick="showView('day1')">
+      <div class="ov-day-label">Day 1</div><div class="ov-date">Wed 27 May · Arrival</div>
+      <div class="ov-title">Saadian Tombs · Hammam · La Pergola</div>
+      <div class="ov-highlights">
+        <div class="ov-hl">Coco Rooftop brunch</div>
+        <div class="ov-hl">Le Bain de Kasbah spa</div>
+        <div class="ov-hl">Live jazz dinner</div>
+        <div class="ov-hl">Rooftop evenings</div>
+      </div>
+    </div>
+    <div class="ov-card" onclick="showView('day2')">
+      <div class="ov-day-label">Day 2</div><div class="ov-date">Thu 28 May</div>
+      <div class="ov-title">Majorelle · Medersa · Souks · Le Slimana</div>
+      <div class="ov-highlights">
+        <div class="ov-hl">Jardin Majorelle</div>
+        <div class="ov-hl">Dar Cherifa lunch</div>
+        <div class="ov-hl">Le Slimana rooftop</div>
+        <div class="ov-hl">Rooftop evenings</div>
+      </div>
+    </div>
+    <div class="ov-card" onclick="showView('day3')">
+      <div class="ov-day-label">Day 3</div><div class="ov-date">Fri 29 May</div>
+      <div class="ov-title">El Badii · La Terrasse · Lalla Zehra Farm</div>
+      <div class="ov-highlights">
+        <div class="ov-hl">Palais El Badii</div>
+        <div class="ov-hl">Cooking class</div>
+        <div class="ov-hl">La Terrasse du Jardin</div>
+      </div>
+    </div>
+    <div class="ov-card" onclick="showView('day4')">
+      <div class="ov-day-label">Day 4</div><div class="ov-date">Sat 30 May</div>
+      <div class="ov-title">🏔 Atlas Mountains · Folk Marrakech</div>
+      <div class="ov-highlights">
+        <div class="ov-hl">Private tour all-inclusive</div>
+        <div class="ov-hl">Berber lunch included</div>
+        <div class="ov-hl">Gnawa show Saturday!</div>
+      </div>
+    </div>
+    <div class="ov-card" onclick="showView('day5')">
+      <div class="ov-day-label">Day 5</div><div class="ov-date">Sun 31 May · Slow day 🌸</div>
+      <div class="ov-title">Bacha Coffee · Bahia Palace · Le Jardin</div>
+      <div class="ov-highlights">
+        <div class="ov-hl">Dar El Bacha + Bacha Coffee</div>
+        <div class="ov-hl">Mouassine souk wander</div>
+        <div class="ov-hl">Le Jardin garden dinner</div>
+      </div>
+    </div>
+    <div class="ov-card" onclick="showView('day6')">
+      <div class="ov-day-label">Day 6</div><div class="ov-date">Mon 1 June · Departure</div>
+      <div class="ov-title">Mythic Spa · Farewell Lunch · ✈ 19:15</div>
+      <div class="ov-highlights">
+        <div class="ov-hl">Mythic Oriental Spa</div>
+        <div class="ov-hl">Café Dar L'Hssira</div>
+        <div class="ov-hl">Koutoubia Gardens stroll</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════ DAY 1 -->
+<div id="view-day1" class="day-view fade-in">
+  <div class="day-header-block">
+    <div class="day-header-top green">
+      <div class="day-label">Day 1 · Wednesday 27 May · Arrival</div>
+      <div class="day-title-large">Saadian Tombs · Coco Rooftop · Le Bain de Kasbah · La Pergola</div>
+    </div>
+    <div class="day-header-bottom">1 EUR ≈ 10.5 MAD</div>
+  </div>
+  <div class="map-section">
+    <h3>📍 Day 1 map</h3>
+    <div class="map-container">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m40!1m12!1m3!1d6762.5!2d-7.9895!3d31.621!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m25!3e2!4m5!1s0xdafee8d96179e51%3A0x5950b6534f87adb8!2sSaadian%20Tombs%2C%20Marrakech!3m2!1d31.619!2d-7.9895!4m5!1s0xdafee8d2942af039%3A0xd2fb2f0d6a8f!2sCoco%20Rooftop%2C%20Marrakech!3m2!1d31.620!2d-7.990!4m5!1s0xdafee8d5b18be6d%3A0x6dd7d!2sLe%20Bain%20de%20Kasbah!3m2!1d31.619!2d-7.989!4m5!1s0xdafee8d5b18be6d%3A0x6dd!2sLa%20Pergola%20Marrakech!3m2!1d31.621!2d-7.988!5e0!3m2!1sen!2sma!4v1700000000000!5m2!1sen!2sma" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="tl-card">
+    <div class="tl-card-inner">
+      <div class="tl-event">
+        <div class="tl-time">08:15</div>
+        <div><div class="tl-name">✈ Arrive Marrakech Menara Airport</div></div>
+      </div>
+    </div>
+    <div class="tl-transport">🚕 Airport → Riad Deva Lina to drop off luggage · pre-booked · ~20 min · 25 MAD pp</div>
+    <div class="tl-transport">🚶 Walk ~5 min to Saadian Tombs</div>
+    <div class="tl-card-inner">
+      <div class="tl-event">
+        <div class="tl-time">09:30</div>
+        <div>
+          <div class="tl-name">Saadian Tombs</div>
+          <div class="tl-note">One of Morocco's most beautiful historic sites — a 16th-century royal necropolis decorated with intricate Carrara marble, cedar carvings and colourful zellij tilework, rediscovered only in 1917.</div>
+          <div class="tl-tags"><span class="tl-tag tag-sight">Sightseeing</span><span class="tl-tag tag-incl">Cash · 100 MAD</span></div>
+          <div class="tl-cost"><span class="tl-cost-mad">100 MAD</span><span class="tl-cost-eur">≈ €9.50</span></div>
+          <a class="tl-map-link" href="https://maps.google.com/?q=Saadian+Tombs+Marrakech" target="_blank">📍 Google Maps</a>
+        </div>
+      </div>
+    </div>
+    <div class="tl-transport">🚶 Walk ~10 min to Coco Rooftop · free</div>
+    <div class="tl-card-inner">
+      <div class="tl-event">
+        <div class="tl-time">11:30</div>
+        <div>
+          <div class="tl-name">Brunch · Coco Rooftop ⭐ 4.6</div>
+          <div class="tl-note">A generous Moroccan spread-style brunch — msemen flatbreads, honey, amlou, fresh juices, eggs and pastries. Light and colourful!</div>
+          <div class="tl-tags"><span class="tl-tag tag-eat">Brunch</span></div>
+          <div class="tl-cost"><span class="tl-cost-mad">200–280 MAD</span><span class="tl-cost-eur">≈ €19–27</span></div>
+          <a class="tl-map-link" href="https://maps.google.com/?q=Coco+Rooftop+Marrakech" target="_blank">📍 Google Maps</a>
+        </div>
+      </div>
+    </div>
+    <div class="tl-transport">🚶 Walk ~5 min to Le Bain de Kasbah · free</div>
+    <div class="tl-card-inner">
+      <div class="tl-event">
+        <div class="tl-time">14:00</div>
+        <div>
+          <div class="tl-name">Spa #1 · Le Bain de Kasbah — Hammam & Massage ⭐ 4.8</div>
+          <div class="tl-note">A beloved neighbourhood hammam steps from the riad — traditional black soap scrub followed by a full-body massage in serene surroundings. One of the best-rated spas in the Kasbah.</div>
+          <div class="tl-note-box opt">✦ If skipping the spa: Bahia Palace (~10 min walk, 70 MAD) · or a wander through the Mellah quarter and leather souks near Bab Agnaou (free)</div>
+          <div class="tl-tags"><span class="tl-tag tag-spa">Spa</span></div>
+          <div class="tl-cost"><span class="tl-cost-mad">550–750 MAD</span><span class="tl-cost-eur">≈ €52–71</span></div>
+          <a class="tl-map-link" href="https://maps.google.com/?q=Le+Bain+de+Kasbah+Marrakech" target="_blank">📍 Google Maps</a>
+        </div>
+      </div>
+    </div>
+    <div class="tl-transport">🚕 Taxi riad → La Pergola · ~5 MAD pp · ~10 min</div>
+    <div class="tl-card-inner">
+      <div class="tl-event">
+        <div class="tl-time">19:30</div>
+        <div>
+          <div class="tl-name">Dinner · La Pergola & Le Bistro Arabe ⭐ 4.8</div>
+          <div class="tl-note">Franco-Moroccan fusion in an elegant riad setting. Refined takes on Moroccan classics — slow-cooked lamb, beautifully spiced tagines — alongside French bistro dishes. Cocktails and live jazz!</div>
+          <div class="tl-tags"><span class="tl-tag tag-eat">Dinner</span><span class="tl-tag" style="background:#FCE8F0;color:#7A1535">Live jazz 🎷 from 7:30pm</span></div>
+          <div class="tl-cost"><span class="tl-cost-mad">400–500 MAD</span><span class="tl-cost-eur">≈ €38–48</span></div>
+          <a class="tl-map-link" href="https://maps.google.com/?q=La+Pergola+Marrakech+Riad+Monceau" target="_blank">📍 Google Maps</a>
+        </div>
+      </div>
+    </div>
+    <div class="tl-riad">🏠 Return to riad · taxi ~5 MAD pp · ~10 min</div>
+  </div>
+  <div class="tl-total">
+    <div class="tl-total-label">Day 1 total pp<div class="tl-total-sub">taxi in + entry + brunch + spa + dinner</div></div>
+    <div class="tl-total-right"><div class="tl-total-mad">1,285–1,660 MAD</div><div class="tl-total-eur">≈ €122–158</div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════ DAY 2 -->
+<div id="view-day2" class="day-view fade-in">
+  <div class="day-header-block">
+    <div class="day-header-top mid-green">
+      <div class="day-label">Day 2 · Thursday 28 May</div>
+      <div class="day-title-large">Jardin Majorelle · Medersa · Dar Cherifa · Souks · Le Slimana</div>
+    </div>
+    <div class="day-header-bottom">1 EUR ≈ 10.5 MAD</div>
+  </div>
+  <div class="map-section">
+    <h3>📍 Day 2 map</h3>
+    <div class="map-container">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m40!1m12!1m3!1d13520!2d-8.001!3d31.638!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m25!3e2!4m5!1s0xdafee9248deba0f%3A0x8aef9cf1f89ca8e!2sJardin%20Majorelle%2C%20Marrakech!3m2!1d31.641!2d-8.013!4m5!1s0xdafee8d5b18be6d%3A0x6dd7d9dc3f3fa38!2sMedersa%20Ben%20Youssef!3m2!1d31.635!2d-7.988!4m5!1s0xdafee8d5b18be6d%3A0x6dd7!2sDar%20Cherifa%20Marrakech!3m2!1d31.633!2d-7.990!4m5!1s0xdafee8d5b18be6d%3A0x6!2sLe%20Slimana%20Marrakech!3m2!1d31.632!2d-7.991!5e0!3m2!1sen!2sma!4v1700000000000!5m2!1sen!2sma" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="tl-card">
+    <div class="tl-transport">🚕 Riad → Jardin Majorelle · taxi ~8 MAD pp · ~15 min</div>
+    <div class="tl-card-inner">
+      <div class="tl-event">
+        <div class="tl-time">08:30</div>
+        <div>
+          <div class="tl-name">Jardin Majorelle — Garden + Berber Museum ⭐ 4.7</div>
+          <div class="tl-note">An iconic cobalt-blue art garden created by painter Jacques Majorelle and later saved by Yves Saint Laurent. The on-site Berber Museum holds one of Morocco's finest collections of tribal jewellery, textiles and ceramics.</div>
+          <div class="tl-tags"><span class="tl-tag tag-sight">Sightseeing</span><span class="tl-tag" style="background:var(--purple-light);color:var(--purple-dark)">Optional: YSL Museum +130 MAD</span></div>
+          <div class="tl-cost"><span class="tl-cost-mad">70 MAD</span><span class="tl-cost-eur">≈ €6.70</span></div>
+          <a class="tl-map-link" href="https://maps.google.com/?q=Jardin+Majorelle+Marrakech" target="_blank">📍 Google Maps</a>
+        </div>
+      </div>
+    </div>
+    <div class="tl-transport">🚶 Walk ~5 min to Grand Café de la Poste · free</div>
+    <div class="tl-card-inner">
+      <div class="tl-event">
+        <div class="tl-time">10:30</div>
+        <div>
+          <div class="tl-name">Coffee · Grand Café de la Poste ⭐ 4.2</div>
+          <div class="tl-note">A gorgeous colonial-era brasserie dating back to 1925 — grand terrace, high ceilings, ceiling fans and excellent coffee. One of the most atmospheric spots in Guéliz and perfect for a leisurely sit-down after the garden crowds. Don't miss the fresh orange juice.</div>
+          <div class="tl-tags"><span class="tl-tag tag-eat">Coffee</span></div>
+          <div class="tl-cost"><span class="tl-cost-mad">30–60 MAD</span><span class="tl-cost-eur">≈ €3–6</span></div>
+          <a class="tl-map-link" href="https://maps.google.com/?q=Grand+Cafe+de+la+Poste+Marrakech" target="_blank">📍 Google Maps</a>
+        </div>
+      </div>
+    </div>
+    <div class="tl-transport">🚕 Guéliz → Medersa Ben Youssef · taxi ~8 MAD pp · ~15 min</div>
+    <div class="tl-card-inner">
+      <div class="tl-event">
+        <div class="tl-time">11:30</div>
+        <div>
+          <div class="tl-name">Medersa Ben Youssef</div>
+          <div class="tl-note">The largest historic Islamic college in Morocco, dating to the 14th century. Its courtyard is a jaw-dropping masterpiece of carved cedar, stucco and zellij tilework — one of the most beautiful spaces in all of Marrakech.</div>
+          <div class="tl-tags"><span class="tl-tag tag-sight">Sightseeing</span><span class="tl-tag tag-incl">Cash · 50 MAD</span></div>
+          <div class="tl-cost"><span class="tl-cost-mad">50 MAD</span><span class="tl-cost-eur">≈ €4.75</span></div>
+          <a class="tl-map-link" href="https://maps.google.com/?q=Medersa+Ben+Youssef+Marrakech" target="_blank">📍 Google Maps</a>
+        </div>
+      </div>
+    </div>
+    <div class="tl-transport">🚶 Walk ~8 min through northern souks to Dar Cherifa · free</div>
+    <div class="tl-card-inner">
+      <div class="tl-event">
+        <div class="tl-time">13:00</div>
+        <div>
+          <div class="tl-name">Lunch · Dar Cherifa ⭐ 4.4</div>
+          <div class="tl-note">Simple, homestyle Moroccan in the oldest riad in Marrakech — a 16th-century candlelit courtyard. Short menu of salads, soups, tagines and bastilla.</div>
+          <div class="tl-tags"><span class="tl-tag tag-eat">Lunch</span><span class="tl-tag tag-incl">Cash only</span></div>
+          <div class="tl-cost"><span class="tl-cost-mad">200–350 MAD</span><span class="tl-cost-eur">≈ €19–33</span></div>
+          <a class="tl-map-link" href="https://maps.google.com/?q=Dar+Cherifa+Marrakech" target="_blank">📍 Google Maps</a>
+        </div>
+      </div>
+      <div class="tl-event">
+        <div class="tl-time">14:30</div>
+        <div>
+          <div class="tl-name">Mellah souk & Rue des Bijoutiers</div>
+          <div class="tl-note">The Mellah is Marrakech's historic Jewish quarter — less touristy than Semmarine, with great silver jewellery, antiques and fabrics along the silversmiths' street. A quieter, more authentic browsing experience.</div>
+          <div class="tl-tags"><span class="tl-tag tag-sight">Explore & shop</span></div>
+          <a class="tl-map-link" href="https://maps.google.com/?q=Mellah+Marrakech" target="_blank">📍 Google Maps</a>
+        </div>
+      </div>
+    </div>
+    <div class="tl-transport">🚶 Walk ~12 min through the medina to Le Slimana · free</div>
+    <div class="tl-card-inner">
+      <div class="tl-event">
+        <div class="tl-time">19:30</div>
+        <div>
+          <div class="tl-name">Dinner · Le Slimana Rooftop ⭐ 4.8</div>
+          <div class="tl-note">Modern Moroccan-Mediterranean fusion, beautifully plated. The caramelised octopus is a standout, the lamb ravioli blends French technique with Moroccan spicing, and the pistachio crème brûlée is a gorgeous East-meets-West finish. A step above the typical medina rooftop.</div>
+          <div class="tl-tags"><span class="tl-tag tag-eat">Dinner</span><span class="tl-tag" style="background:var(--green-light);color:var(--green-dark)">Wine available</span></div>
+          <div class="tl-cost"><span class="tl-cost-mad">250–400 MAD</span><span class="tl-cost-eur">≈ €24–38</span></div>
+          <a class="tl-map-link" href="https://maps.google.com/?q=Le+Slimana+Marrakech" target="_blank">📍 Google Maps</a>
+        </div>
+      </div>
+    </div>
+    <div class="tl-riad">🏠 Return to riad · walk ~18 min or taxi ~5 MAD pp</div>
+  </div>
+  <div class="tl-total">
+    <div class="tl-total-label">Day 2 total pp<div class="tl-total-sub">taxis + Majorelle + Medersa + coffee + lunch + dinner</div></div>
+    <div class="tl-total-right"><div class="tl-total-mad">616–926 MAD</div><div class="tl-total-eur">≈ €59–88</div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════ DAY 3 -->
+<div id="view-day3" class="day-view fade-in">
+  <div class="day-header-block">
+    <div class="day-header-top green">
+      <div class="day-label">Day 3 · Friday 29 May</div>
+      <div class="day-title-large">Palais El Badii · La Terrasse du Jardin · Lalla Zehra Farm Cooking Class 🏊</div>
+    </div>
+    <div class="day-header-bottom">1 EUR ≈ 10.5 MAD</div>
+  </div>
+  <div class="map-section">
+    <h3>📍 Day 3 map</h3>
+    <div class="map-container">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m30!1m12!1m3!1d6762!2d-7.988!3d31.620!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m15!3e2!4m5!1s0xdafee8d96179e51%3A0x5950b6534f87adb8!2sPalais%20El%20Badii%2C%20Marrakech!3m2!1d31.620!2d-7.988!4m5!1s0xdafee8d5b18be6d%3A0x6dd!2sLa%20Terrasse%20du%20Jardin%2C%20Marrakech!3m2!1d31.625!2d-7.990!5e0!3m2!1sen!2sma!4v1700000000000!5m2!1sen!2sma" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="tl-card">
+    <div class="tl-card-inner">
+      <div class="tl-event">
+        <div class="tl-time">09:30</div>
+        <div>
+          <div class="tl-name">Palais El Badii</div>
+          <div class="tl-note">The ruins of a 16th-century palace once described as one of the wonders of the world, built by Sultan Ahmed al-Mansour. The vast open courtyard and rooftop offer sweeping views across the medina — and resident storks nesting on the towers.</div>
+          <div class="tl-tags"><span class="tl-tag tag-sight">Sightseeing</span><span class="tl-tag tag-incl">Cash · 100 MAD</span></div>
+          <div class="tl-cost"><span class="tl-cost-mad">100 MAD</span><span class="tl-cost-eur">≈ €9.50</span></div>
+          <a class="tl-map-link" href="https://maps.google.com/?q=Palais+El+Badii+Marrakech" target="_blank">📍 Google Maps</a>
+        </div>
+      </div>
+      <div class="tl-event">
+        <div class="tl-time">11:00</div>
+        <div>
+          <div class="tl-name">Kasbah streets & Different Concept Store</div>
+          <div class="tl-note">The Kasbah quarter is one of the most authentic parts of the medina — quieter laneways, beautiful doorways and local life. Different Concept Store at 14 Rue Amsafah stocks carefully curated Moroccan bags, jewellery and accessories.</div>
+          <div class="tl-tags"><span class="tl-tag tag-sight">Explore & shop</span></div>
+          <a class="tl-map-link" href="https://maps.google.com/?q=Different+Concept+Store+Marrakech+Rue+Amsafah" target="_blank">📍 Google Maps</a>
+        </div>
+      </div>
+    </div>
+    <div class="tl-transport">🚶 Walk ~15 min to La Terrasse du Jardin · free</div>
+    <div class="tl-card-inner">
+      <div class="tl-event">
+        <div class="tl-time">13:00</div>
+        <div>
+          <div class="tl-name">Lunch · La Terrasse du Jardin ⭐ 4.9</div>
+          <div class="tl-note">Honest, hearty traditional Moroccan. Rfissa — shredded chicken, lentils and fenugreek over msemen; or Kofta tagine — spiced minced lamb in tomato-egg sauce; or Moroccan crepes with honey and butter.</div>
+          <div class="tl-tags"><span class="tl-tag tag-eat">Lunch</span></div>
+          <div class="tl-cost"><span class="tl-cost-mad">200–280 MAD</span><span class="tl-cost-eur">≈ €19–27</span></div>
+          <a class="tl-map-link" href="https://maps.google.com/?q=La+Terrasse+du+Jardin+Marrakech" target="_blank">📍 Google Maps</a>
+        </div>
+      </div>
+    </div>
+    <div class="tl-transport">🚶 Walk ~15 min back to riad</div>
+    <div class="tl-card-inner">
+      <div class="tl-event">
+        <div class="tl-time">15:30</div>
+        <div>
+          <div class="tl-name">Lalla Zehra — Farm Cooking Class & Pool</div>
+          <div class="tl-note">We will head to a farm to make a classic Moroccan tagine (chicken with preserved lemon & olives, or lamb with prunes & almonds) and zaalouk — a smoky, silky aubergine dip. Everything over charcoal in traditional clay pots, using farm-fresh ingredients and Berber family recipes. We can swim in the pool while tagines simmer, then eat at the family table. Our hosts will pick us from the Riad and drop us off.</div>
+          <div class="tl-tags"><span class="tl-tag tag-cook">Cooking class</span><span class="tl-tag" style="background:var(--blue-light);color:var(--blue-dark)">Pool 🏊</span><span class="tl-tag tag-incl">All inclusive</span><span class="tl-tag tag-incl">Transport incl.</span></div>
+          <div class="tl-cost"><span class="tl-cost-mad">600 MAD</span><span class="tl-cost-eur">≈ €57 all-in</span></div>
+          <a class="tl-map-link" href="https://maps.google.com/?q=Lalla+Zehra+Marrakech" target="_blank">📍 Google Maps</a>
+        </div>
+      </div>
+    </div>
+    <div class="tl-riad">🏠 Return to riad · transport included · ~20:30 drop-off</div>
+  </div>
+  <div class="tl-total">
+    <div class="tl-total-label">Day 3 total pp<div class="tl-total-sub">El Badii + lunch + Lalla Zehra (all transport incl.)</div></div>
+    <div class="tl-total-right"><div class="tl-total-mad">900–980 MAD</div><div class="tl-total-eur">≈ €86–93</div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════ DAY 4 -->
+<div id="view-day4" class="day-view fade-in">
+  <div class="day-header-block">
+    <div class="day-header-top mid-green">
+      <div class="day-label">Day 4 · Saturday 30 May</div>
+      <div class="day-title-large">🏔 Private Atlas Mountains & 5 Valleys Tour · Folk Marrakech</div>
+    </div>
+    <div class="day-header-bottom">Private minivan for 6 · pickup from riad at 08:00 · all inclusive</div>
+  </div>
+  <div class="tl-card">
+    <div class="tl-card-inner">
+      <div class="tl-event">
+        <div class="tl-time">08:00</div>
+        <div>
+          <div class="tl-name">Private Atlas Mountains & 5 Valleys Tour</div>
+          <div class="tl-note">Private minivan for 6 from riad · English-speaking guide · all inclusive</div>
+          <div class="tl-tags"><span class="tl-tag tag-trip">Day trip</span><span class="tl-tag tag-incl">Breakfast incl.</span><span class="tl-tag tag-incl">Lunch incl.</span><span class="tl-tag tag-incl">Transport incl.</span></div>
+          <div class="tl-cost"><span class="tl-cost-mad">830 MAD</span><span class="tl-cost-eur">= €79 pp (€474 ÷ 6)</span></div>
+        </div>
+      </div>
+      <div class="tl-event">
+        <div class="tl-time">~10:00</div>
+        <div>
+          <div class="tl-name">Argan oil cooperative — breakfast & demo</div>
+          <div class="tl-note">Mint tea · honey · amlou (Berber almond-argan spread) · fresh bread · watch argan oil being hand-pressed by the women's cooperative</div>
+          <div class="tl-tags"><span class="tl-tag tag-incl">Included</span></div>
+        </div>
+      </div>
+      <div class="tl-event">
+        <div class="tl-time">~11:30</div>
+        <div>
+          <div class="tl-name">Guided walk — Berber villages & 5 valleys</div>
+          <div class="tl-note">60–90 min walk at your own pace through terraced valleys and Berber villages, with views up to Mount Toubkal — North Africa's highest peak.</div>
+          <div class="tl-note-box fitness">🩵 The hike is fully flexible — guide sets pace to the slowest walker. No camel ride on this tour. Comfortable trainers are fine.</div>
+          <div class="tl-tags"><span class="tl-tag tag-incl">Included</span></div>
+        </div>
+      </div>
+      <div class="tl-event">
+        <div class="tl-time">~13:30</div>
+        <div>
+          <div class="tl-name">Home-cooked Berber lunch at family home</div>
+          <div class="tl-note">Simple, nourishing lunch made from whatever's in the valley that day. Maybe some harira soup, fresh salads dressed with cumin and lemon, a slow-cooked mountain tagine, couscous with seven vegetables and seasonal fruit. Vegetarian options available.</div>
+          <div class="tl-tags"><span class="tl-tag tag-eat">Lunch</span><span class="tl-tag tag-incl">Included</span></div>
+        </div>
+      </div>
+      <div class="tl-event">
+        <div class="tl-time">~17:30</div>
+        <div>
+          <div class="tl-name">Return to Marrakech · drop-off at riad · freshen up</div>
+          <div class="tl-tags"><span class="tl-tag tag-incl">Transport included</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="tl-transport">🚕 Riad → Folk Marrakech · taxi ~12 MAD pp · ~20 min to Guéliz</div>
+    <div class="tl-card-inner">
+      <div class="tl-event">
+        <div class="tl-time">19:30</div>
+        <div>
+          <div class="tl-name">Dinner · Folk Marrakech ⭐ 4.9</div>
+          <div class="tl-note">Contemporary Moroccan drawing on Berber, Arab and Andalusian influences — pastilla, tagines, couscous — with a modern edge. Gnawa music and belly dancing. Cocktails available.</div>
+          <div class="tl-tags"><span class="tl-tag tag-eat">Dinner</span><span class="tl-tag" style="background:#FCE8F0;color:#7A1535">Gnawa show 🎶 8:30pm</span><span class="tl-tag" style="background:var(--green-light);color:var(--green-dark)">Happy hour 7–9pm</span></div>
+          <div class="tl-cost"><span class="tl-cost-mad">250–350 MAD</span><span class="tl-cost-eur">≈ €24–33</span></div>
+          <a class="tl-map-link" href="https://maps.google.com/?q=Folk+Marrakech" target="_blank">📍 Google Maps</a>
+        </div>
+      </div>
+    </div>
+    <div class="tl-riad">🏠 Folk → riad · taxi ~12 MAD pp · ~20 min · taxis always outside Folk</div>
+  </div>
+  <div class="tl-total">
+    <div class="tl-total-label">Day 4 total pp<div class="tl-total-sub">private tour (all-incl.) + taxis + dinner</div></div>
+    <div class="tl-total-right"><div class="tl-total-mad">1,104–1,204 MAD</div><div class="tl-total-eur">≈ €105–115</div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════ DAY 5 -->
+<div id="view-day5" class="day-view fade-in">
+  <div class="day-header-block">
+    <div class="day-header-top green">
+      <div class="day-label">Day 5 · Sunday 31 May · Slow Day 🌸</div>
+      <div class="day-title-large">Bacha Coffee · Bahia Palace · Mouassine · Maison de la Photo · Le Jardin</div>
+    </div>
+    <div class="day-header-bottom">1 EUR ≈ 10.5 MAD</div>
+  </div>
+  <div class="tl-note-box warn" style="margin-bottom:12px;">⚠️ Queue outside Dar El Bacha at 9am — opens 10am, closed Mondays, open Sundays ✓<br>All coffee reservations are gone by noon. Arrive at 9am to queue. Collect your pager at the café counter, then explore the palace while you wait — usually 45–60 min. Absolutely worth it.</div>
+  <div class="map-section">
+    <h3>📍 Day 5 map</h3>
+    <div class="map-container">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m50!1m12!1m3!1d13520!2d-7.990!3d31.629!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m35!3e2!4m5!1s0xdafee8d96179e51%3A0x5950b6534f87adb8!2sDar%20El%20Bacha%20Marrakech!3m2!1d31.632!2d-7.990!4m5!1s0xdafee8d2942af039%3A0xd2fb2f0d6a8f!2sBahia%20Palace%2C%20Marrakech!3m2!1d31.621!2d-7.983!4m5!1s0xdafee8d5b18be6d%3A0x6dd7d9dc3f3fa38!2sMouassine%2C%20Marrakech!3m2!1d31.634!2d-7.990!4m5!1s0xdafee8e0cbfc43f%3A0xf3ccab1fe1e44!2sMaison%20de%20la%20Photographie!3m2!1d31.636!2d-7.990!4m5!1s0xdafee8d5b18be6d%3A0x6!2sLe%20Jardin%20Marrakech!3m2!1d31.635!2d-7.992!5e0!3m2!1sen!2sma!4v1700000000000!5m2!1sen!2sma" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="tl-card">
+    <div class="tl-card-inner">
+      <div class="tl-event">
+        <div class="tl-time">09:00</div>
+        <div>
+          <div class="tl-name">Queue outside Dar El Bacha</div>
+          <div class="tl-note">Arrive 9am · opens 10am · collect pager at café · all reservations gone by noon!</div>
+          <div class="tl-cost"><span class="tl-cost-mad">Free</span></div>
+          <a class="tl-map-link" href="https://maps.google.com/?q=Dar+El+Bacha+Marrakech" target="_blank">📍 Google Maps</a>
+        </div>
+      </div>
+      <div class="tl-event">
+        <div class="tl-time">10:00</div>
+        <div>
+          <div class="tl-name">Musée Dar El Bacha + Bacha Coffee ⭐ 4.8</div>
+          <div class="tl-note">A 17th-century palace turned museum with stunning courtyards, carved plasterwork and zellige floors. The Bacha Coffee experience within offers over 200 single-origin coffees sourced from across the world — served with exquisite ceremony.</div>
+          <div class="tl-tags"><span class="tl-tag tag-sight">Palace museum</span><span class="tl-tag tag-eat">Coffee experience</span><span class="tl-tag tag-incl">Cash · 60 MAD entry</span></div>
+          <div class="tl-cost"><span class="tl-cost-mad">250–300 MAD</span><span class="tl-cost-eur">≈ €24–29</span></div>
+          <a class="tl-map-link" href="https://maps.google.com/?q=Dar+El+Bacha+Museum+Marrakech" target="_blank">📍 Google Maps</a>
+        </div>
+      </div>
+    </div>
+    <div class="tl-transport">🚶 Walk ~12 min to Bahia Palace · free</div>
+    <div class="tl-card-inner">
+      <div class="tl-event">
+        <div class="tl-time">11:30</div>
+        <div>
+          <div class="tl-name">Bahia Palace</div>
+          <div class="tl-note">A 19th-century palace built for the Grand Vizier Ba Ahmed — its name means "brilliance." Features vast ornate rooms, painted cedar ceilings, mosaic floors and fragrant courtyard gardens. Considered as one of the most spectacular palaces in Morocco.</div>
+          <div class="tl-tags"><span class="tl-tag tag-sight">Sightseeing</span></div>
+          <div class="tl-cost"><span class="tl-cost-mad">70 MAD</span><span class="tl-cost-eur">≈ €6.70</span></div>
+          <a class="tl-map-link" href="https://maps.google.com/?q=Bahia+Palace+Marrakech" target="_blank">📍 Google Maps</a>
+        </div>
+      </div>
+    </div>
+    <div class="tl-transport">🚶 Walk ~15 min to Mouassine neighbourhood · free</div>
+    <div class="tl-card-inner">
+      <div class="tl-event">
+        <div class="tl-time">12:30</div>
+        <div>
+          <div class="tl-name">Mouassine neighbourhood wander</div>
+          <div class="tl-note">A quieter, more upscale quarter of the medina — beautiful Mouassine fountain square, independent boutiques, galleries and concept stores. Far less hectic than Semmarine. Perfect for a slow, unhurried browse.</div>
+          <div class="tl-tags"><span class="tl-tag tag-sight">Explore</span><span class="tl-tag tag-slow">Slow day 🌸</span></div>
+          <a class="tl-map-link" href="https://maps.google.com/?q=Mouassine+Marrakech" target="_blank">📍 Google Maps</a>
+        </div>
+      </div>
+    </div>
+    <div class="tl-transport">🚶 Walk ~5 min to Café des Épices · free</div>
+    <div class="tl-card-inner">
+      <div class="tl-event">
+        <div class="tl-time">13:30</div>
+        <div>
+          <div class="tl-name">Lunch · Café des Épices ⭐ 4.5</div>
+          <div class="tl-note">Light Moroccan café food: fresh salads, kefta brochettes, briouats (crispy parcels of cheese or kofta), tagines. Rooftop setting over the spice square. Relaxed and simple!</div>
+          <div class="tl-tags"><span class="tl-tag tag-eat">Lunch</span></div>
+          <div class="tl-cost"><span class="tl-cost-mad">80–150 MAD</span><span class="tl-cost-eur">≈ €8–14</span></div>
+          <a class="tl-map-link" href="https://maps.google.com/?q=Cafe+des+Epices+Marrakech" target="_blank">📍 Google Maps</a>
+        </div>
+      </div>
+    </div>
+    <div class="tl-transport">🚶 Walk ~3 min to Maison de la Photographie · free</div>
+    <div class="tl-card-inner">
+      <div class="tl-event">
+        <div class="tl-time">14:30</div>
+        <div>
+          <div class="tl-name">Maison de la Photographie</div>
+          <div class="tl-note">A beautifully presented riad museum showcasing thousands of historic photographs of Morocco from 1870–1950 — an extraordinary time capsule of Berber life, landscapes and traditions. Rooftop café with sweeping Atlas Mountain views.</div>
+          <div class="tl-tags"><span class="tl-tag tag-sight">Sightseeing</span></div>
+          <div class="tl-cost"><span class="tl-cost-mad">50 MAD</span><span class="tl-cost-eur">≈ €4.75</span></div>
+          <a class="tl-map-link" href="https://maps.google.com/?q=Maison+de+la+Photographie+Marrakech" target="_blank">📍 Google Maps</a>
+        </div>
+      </div>
+      <div class="tl-event">
+        <div class="tl-time">16:00</div>
+        <div>
+          <div class="tl-name">Afternoon at leisure</div>
+          <div class="tl-note">Riad rooftop · quiet café · last souk browse · a slow afternoon!</div>
+          <div class="tl-tags"><span class="tl-tag tag-slow">Slow day 🌸</span></div>
+          <div class="tl-cost"><span class="tl-cost-mad">30–50 MAD</span><span class="tl-cost-eur">≈ €3–5</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="tl-transport">🚶 Walk ~12 min through Mouassine to Le Jardin · free</div>
+    <div class="tl-card-inner">
+      <div class="tl-event">
+        <div class="tl-time">19:30</div>
+        <div>
+          <div class="tl-name">Dinner · Le Jardin ⭐ 4.5</div>
+          <div class="tl-note">A beautiful open-air courtyard garden restaurant balancing traditional Moroccan with Mediterranean influences. Tender, aromatic tagines are the heart of the menu, alongside fresh, colourful salads.</div>
+          <div class="tl-tags"><span class="tl-tag tag-eat">Dinner</span><span class="tl-tag" style="background:#EAF3DE;color:#27500A">Garden courtyard</span><span class="tl-tag" style="background:var(--green-light);color:var(--green-dark)">Wine available</span></div>
+          <div class="tl-cost"><span class="tl-cost-mad">200–350 MAD</span><span class="tl-cost-eur">≈ €19–33</span></div>
+          <a class="tl-map-link" href="https://maps.google.com/?q=Le+Jardin+Marrakech" target="_blank">📍 Google Maps</a>
+        </div>
+      </div>
+    </div>
+    <div class="tl-riad">🏠 Le Jardin → riad · walk ~15 min or taxi ~5 MAD pp</div>
+  </div>
+  <div class="tl-total">
+    <div class="tl-total-label">Day 5 total pp<div class="tl-total-sub">Bacha Coffee + Bahia + Mouassine + lunch + Maison + dinner</div></div>
+    <div class="tl-total-right"><div class="tl-total-mad">580–920 MAD</div><div class="tl-total-eur">≈ €55–88</div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════ DAY 6 -->
+<div id="view-day6" class="day-view fade-in">
+  <div class="day-header-block">
+    <div class="day-header-top mid-green">
+      <div class="day-label">Day 6 · Monday 1 June · Departure</div>
+      <div class="day-title-large">Mythic Oriental Spa · Farewell Lunch · ✈ Flight Home 19:15</div>
+    </div>
+    <div class="day-header-bottom">1 EUR ≈ 10.5 MAD</div>
+  </div>
+  <div class="map-section">
+    <h3>📍 Day 6 map</h3>
+    <div class="map-container">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m30!1m12!1m3!1d6762!2d-7.990!3d31.630!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m15!3e2!4m5!1s0xdafee8d5b18be6d%3A0x6dd7d!2sMythic%20Oriental%20Spa%20Marrakech!3m2!1d31.636!2d-7.991!4m5!1s0xdafee8d5b18be6d%3A0x6!2sCafe%20Dar%20L%27Hssira%20Marrakech!3m2!1d31.625!2d-7.989!5e0!3m2!1sen!2sma!4v1700000000000!5m2!1sen!2sma" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="tl-card">
+    <div class="tl-card-inner">
+      <div class="tl-event">
+        <div class="tl-time">09:30</div>
+        <div>
+          <div class="tl-name">Leisurely morning · Koutoubia Gardens stroll</div>
+          <div class="tl-note">A peaceful walk in the gardens surrounding the 12th-century Koutoubia Mosque — Marrakech's most iconic landmark — and with views of the minaret and the Atlas Mountains beyond.</div>
+          <div class="tl-tags"><span class="tl-tag tag-sight">Free</span></div>
+          <a class="tl-map-link" href="https://maps.google.com/?q=Koutoubia+Gardens+Marrakech" target="_blank">📍 Google Maps</a>
+        </div>
+      </div>
+    </div>
+    <div class="tl-transport">🚶 Walk ~12 min through Mouassine to Mythic Oriental Spa · free</div>
+    <div class="tl-card-inner">
+      <div class="tl-event">
+        <div class="tl-time">11:00</div>
+        <div>
+          <div class="tl-name">Spa #2 · Mythic Oriental Spa — Hammam & Massage ⭐ 4.8</div>
+          <div class="tl-note">Traditional hammam scrub, full massage and rooftop mint tea looking over the medina rooftops. Considered as one of Marrakech's most beautifully designed spas.</div>
+          <div class="tl-note-box opt">✦ If skipping the spa: final souk browse in Mouassine · rooftop mint tea at Café des Épices · or a slow morning at the riad with your bags packed.</div>
+          <div class="tl-tags"><span class="tl-tag tag-spa">Spa</span></div>
+          <div class="tl-cost"><span class="tl-cost-mad">400–600 MAD</span><span class="tl-cost-eur">≈ €38–57</span></div>
+          <a class="tl-map-link" href="https://maps.google.com/?q=Mythic+Oriental+Spa+Marrakech" target="_blank">📍 Google Maps</a>
+        </div>
+      </div>
+    </div>
+    <div class="tl-transport">🚶 Walk ~10 min to Café Dar L'Hssira · free</div>
+    <div class="tl-card-inner">
+      <div class="tl-event">
+        <div class="tl-time">13:30</div>
+        <div>
+          <div class="tl-name">Farewell lunch · Café Dar L'Hssira ⭐ 4.7</div>
+          <div class="tl-note">Moroccan home cooking: Harira to start — the classic tomato, lentil and chickpea soup with a squeeze of lemon. Then tagines, couscous, or pastilla (the showstopper pigeon or chicken pie dusted with icing sugar and cinnamon).</div>
+          <div class="tl-tags"><span class="tl-tag tag-eat">Lunch</span><span class="tl-tag tag-incl">Cash only</span></div>
+          <div class="tl-cost"><span class="tl-cost-mad">50–100 MAD</span><span class="tl-cost-eur">≈ €5–10</span></div>
+          <a class="tl-map-link" href="https://maps.google.com/?q=Cafe+Dar+Lhssira+Marrakech" target="_blank">📍 Google Maps</a>
+        </div>
+      </div>
+    </div>
+    <div class="tl-transport">🚶 Walk ~5 min back to riad · collect bags</div>
+    <div class="tl-card-inner">
+      <div class="tl-event">
+        <div class="tl-time">17:00</div>
+        <div>
+          <div class="tl-name">🚕 Leave riad for airport · ✈ 19:15 departure</div>
+          <div class="tl-note">Leave by 17:00 · allow 2 hrs check-in · pre-booked taxi</div>
+          <div class="tl-cost"><span class="tl-cost-mad">25 MAD pp</span><span class="tl-cost-eur">≈ €2.38</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="tl-riad">✈ Safe travels!</div>
+  </div>
+  <div class="tl-total">
+    <div class="tl-total-label">Day 6 total pp<div class="tl-total-sub">spa + farewell lunch + airport taxi</div></div>
+    <div class="tl-total-right"><div class="tl-total-mad">475–725 MAD</div><div class="tl-total-eur">≈ €45–69</div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════ BOOKINGS -->
+<div id="view-bookings" class="day-view fade-in">
+  <div class="section-title">Booking checklist</div>
+  <div class="section-sub">Tap each item to mark as done</div>
+
+  <div class="booking-list">
+
+    <!-- ACCOMMODATION -->
+    <div class="booking-item">
+      <div class="bcheck" onclick="toggleCheck(this)"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+      <div class="bbody"><div class="bday">Before trip</div><div class="bname">Riad Deva Lina — accommodation</div><div class="bdetail">94 Derb Kbala, Kasbah · Marrakech 40000 · <a href="https://www.booking.com/hotel/ma/riad-deva-lina.en-gb.html" target="_blank">booking.com →</a> · Check-in from 14:00 · Check-out by 11:00</div></div>
+    </div>
+
+    <!-- TAXI IN -->
+    <div class="booking-item">
+      <div class="bcheck" onclick="toggleCheck(this)"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+      <div class="bbody"><div class="bday">Day 1 · 27 May · 08:15</div><div class="bname">Airport taxi — arrival transfer</div><div class="bdetail">Pre-book transfer from Marrakech Menara Airport → Riad Deva Lina · ~25 MAD pp · Ask riad to arrange or book via hotel transfer service</div></div>
+    </div>
+
+    <!-- COCO ROOFTOP -->
+    <div class="booking-item">
+      <div class="bcheck" onclick="toggleCheck(this)"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+      <div class="bbody"><div class="bday">Day 1 · 27 May · 11:30</div><div class="bname">Coco Rooftop — brunch for 6</div><div class="bdetail">+212 6 88 46 35 91 · <a href="https://coco-marrakech.com" target="_blank">coco-marrakech.com</a> · Kasbah, Marrakech · Hours: 11:30am–10pm daily</div></div>
+    </div>
+
+    <!-- LE BAIN DE KASBAH -->
+    <div class="booking-item">
+      <div class="bcheck" onclick="toggleCheck(this)"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+      <div class="bbody"><div class="bday">Day 1 · 27 May · 14:00</div><div class="bname">Le Bain de Kasbah — hammam for 6</div><div class="bdetail">+212 6 68 13 05 77 · <a href="https://www.lebaindekasbah.com/fr" target="_blank">lebaindekasbah.com</a> · Derb El Hammam, Kasbah · Hours: Mon–Sat 9am–7pm (closed Sundays)</div></div>
+    </div>
+
+    <!-- LA PERGOLA -->
+    <div class="booking-item">
+      <div class="bcheck" onclick="toggleCheck(this)"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+      <div class="bbody"><div class="bday">Day 1 · 27 May · 19:30</div><div class="bname">La Pergola & Le Bistro Arabe — dinner</div><div class="bdetail">+212 5 24 42 96 46 · <a href="https://riad-monceau.com" target="_blank">riad-monceau.com</a> · 7/8 Riad Zitoun Lakdim · Hours: 7pm–11pm daily · Live jazz from 7:30pm</div></div>
+    </div>
+
+    <!-- JARDIN MAJORELLE -->
+    <div class="booking-item">
+      <div class="bcheck" onclick="toggleCheck(this)"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+      <div class="bbody"><div class="bday">Day 2 · 28 May · 08:30</div><div class="bname">Jardin Majorelle — timed tickets</div><div class="bdetail"><a href="https://tickets.jardinmajorelle.com" target="_blank">tickets.jardinmajorelle.com</a> (official site only) · Hours: 8am–5:30pm daily</div></div>
+    </div>
+
+    <!-- LE SLIMANA -->
+    <div class="booking-item">
+      <div class="bcheck" onclick="toggleCheck(this)"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+      <div class="bbody"><div class="bday">Day 2 · 28 May · 19:30</div><div class="bname">Le Slimana Rooftop — dinner</div><div class="bdetail">+212 5 24 42 91 69 · <a href="https://leslimana.com" target="_blank">leslimana.com</a> · 53 Kaat Benahid, Medina · Hours: 12pm–11pm daily</div></div>
+    </div>
+
+    <!-- LA TERRASSE DU JARDIN -->
+    <div class="booking-item">
+      <div class="bcheck" onclick="toggleCheck(this)"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+      <div class="bbody"><div class="bday">Day 3 · 29 May · 13:00</div><div class="bname">La Terrasse du Jardin — lunch for 6</div><div class="bdetail">+212 7 73 77 13 56 · <a href="https://laterrassedujardin.ma" target="_blank">laterrassedujardin.ma</a> · Medina · Hours: 11am–11pm daily</div></div>
+    </div>
+
+    <!-- LALLA ZEHRA -->
+    <div class="booking-item">
+      <div class="bcheck" onclick="toggleCheck(this)"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+      <div class="bbody"><div class="bday">Day 3 · 29 May · 15:30</div><div class="bname">Lalla Zehra — cooking class & pool</div><div class="bdetail"><a href="https://lallazehra.com" target="_blank">lallazehra.com</a> · 600 MAD all-inclusive · Pickup from riad at 15:30 · Swimsuits!</div></div>
+    </div>
+
+    <!-- ATLAS MOUNTAINS -->
+    <div class="booking-item">
+      <div class="bcheck" onclick="toggleCheck(this)"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+      <div class="bbody"><div class="bday">Day 4 · 30 May · 08:00</div><div class="bname">Atlas Mountains private tour</div><div class="bdetail">Viator ref: 25014P1 · €474 total = €79 pp · <a href="https://www.viator.com" target="_blank">viator.com</a> · Pickup from riad at 08:00</div></div>
+    </div>
+
+    <!-- FOLK MARRAKECH -->
+    <div class="booking-item">
+      <div class="bcheck" onclick="toggleCheck(this)"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+      <div class="bbody"><div class="bday">Day 4 · 30 May · 19:30</div><div class="bname">Folk Marrakech — dinner</div><div class="bdetail">+212 6 62 49 41 00 · <a href="https://folkmarrakech.com" target="_blank">folkmarrakech.com</a> · Rue el Imam Chafii, Guéliz · Hours: 5pm–2am daily · Gnawa show from 8:30pm</div></div>
+    </div>
+
+    <!-- LE JARDIN -->
+    <div class="booking-item">
+      <div class="bcheck" onclick="toggleCheck(this)"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+      <div class="bbody"><div class="bday">Day 5 · 31 May · 19:30</div><div class="bname">Le Jardin — dinner</div><div class="bdetail"><a href="https://lejardinmarrakech.com" target="_blank">lejardinmarrakech.com</a> · 32 Souk Jeld Sidi Abdelaziz, Medina · Hours: 12pm–11pm daily</div></div>
+    </div>
+
+    <!-- MYTHIC SPA -->
+    <div class="booking-item">
+      <div class="bcheck" onclick="toggleCheck(this)"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+      <div class="bbody"><div class="bday">Day 6 · 1 June · 11:00</div><div class="bname">Mythic Oriental Spa — hammam for 6</div><div class="bdetail">+212 5 24 38 41 61 · <a href="https://mythicoriental-spa.com" target="_blank">mythicoriental-spa.com</a> · Derb Esaleh, Riad Laarouss · Hours: Daily 9am–5:30pm</div></div>
+    </div>
+
+    <!-- TAXI OUT -->
+    <div class="booking-item">
+      <div class="bcheck" onclick="toggleCheck(this)"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+      <div class="bbody"><div class="bday">Day 6 · 1 June · 17:00</div><div class="bname">Airport taxi — departure transfer</div><div class="bdetail">Pre-book transfer from Riad Deva Lina → Marrakech Menara Airport · ~25 MAD pp · Leave riad by 17:00 for 19:15 flight · Ask riad to arrange on arrival</div></div>
+    </div>
+
+  </div>
+
+  <div style="margin-top:24px;">
+    <div class="info-hl">💵 <strong>Cash-only venues — carry dirhams daily:</strong><br>Dar Cherifa · Café Dar L'Hssira · Dar El Bacha (museum entry) · Medersa Ben Youssef · Saadian Tombs · Palais El Badii · Bahia Palace</div>
+
+    <div class="info-card">
+      <h4>💱 Where to exchange money</h4>
+      <p style="margin-bottom:10px;">Exchange in Morocco — <strong>never before you travel</strong>. You'll get significantly better rates in Marrakech than at home or at the airport.</p>
+      <ul>
+        <li><strong>Best option — Hotel Ali Bureau de Change</strong> · Rue Moulay Ismail, near Djemaa el-Fna · Open 24/7 · Consistently rated the best rates in the city · <a href="https://maps.google.com/?q=Hotel+Ali+Bureau+de+Change+Marrakech" target="_blank" style="color:var(--green);">Google Maps →</a></li>
+        <li><strong>Bureaux de change in the medina</strong> · Several licensed offices around Djemaa el-Fna square and Guéliz · Check the rate on Google before exchanging so you know what to expect · Avoid ones near tourist hotspots</li>
+        <li><strong>ATMs</strong> · Available all over Marrakech · Al Barid Bank ATMs charge no withdrawal fee · Western Union ATM near Bahia Palace is convenient · Always decline the "guaranteed exchange rate" option on screen (it's worse)</li>
+        <li><strong>Airport exchange</strong> · Available 24/7 at Menara Airport arrivals · Rates are slightly lower than in the medina</li>
+        <li><strong>Revolut / Wise cards</strong> · Both work well in Marrakech for ATM withdrawals at the interbank rate · Good backup option</li>
+        <li><strong>Tip:</strong> Moroccan dirhams are a closed currency — you cannot exchange them back to euros easily. Don't exchange more than you need.</li>
+      </ul>
+    </div>
+
+    <div class="info-card">
+      <h4>💡 Useful reminders</h4>
+      <ul>
+        <li>Agree fare before getting in any taxi</li>
+        <li>Alcohol: 80–150 MAD per cocktail or glass of wine</li>
+        <li>YSL Museum: optional +130 MAD on Day 2</li>
+        <li>Bacha Coffee: queue at 9am, opens 10am</li>
+        <li>Folk Marrakech gnawa show: starts 8:30pm · happy hour 7–9pm</li>
+        <li>Dar Cherifa: cash only · closes 7pm</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<script>
+function showView(id) {
+  document.querySelectorAll('.overview,.day-view').forEach(el=>el.classList.remove('visible'));
+  document.querySelectorAll('.nav-btn').forEach(btn=>btn.classList.remove('active'));
+  const t=document.getElementById('view-'+id);
+  if(t){t.classList.add('visible');t.classList.remove('fade-in');void t.offsetWidth;t.classList.add('fade-in');}
+  const labels=['overview','day1','day2','day3','day4','day5','day6','bookings'];
+  const idx=labels.indexOf(id);
+  const btns=document.querySelectorAll('.nav-btn');
+  if(idx>=0&&btns[idx]){btns[idx].classList.add('active');btns[idx].scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});}
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleCheck(el){el.classList.toggle('done');}
+</script>
+</body>
+</html>
